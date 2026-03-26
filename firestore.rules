@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOwner() {
+      return request.auth != null
+        && request.auth.token.email == "lakadbd8@gmail.com"
+        && request.auth.token.email_verified == true;
+    }
+
+    match /portfolio/{document=**} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+  }
+}
