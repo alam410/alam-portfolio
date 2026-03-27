@@ -7,7 +7,7 @@
 5. Add your current domain to `Authentication -> Settings -> Authorized domains`.
 6. Open `Build -> Firestore Database`, click `Create database`, and finish the Firestore setup flow.
 7. If Google Cloud still shows Firestore as disabled, enable the `Cloud Firestore API` for the same project and wait a few minutes.
-8. Make sure you sign in with `lakadbd8@gmail.com`.
+8. Make sure you sign in with your authorized owner Google account.
 9. Open `Build -> Storage`, click `Get started`, and create the default Storage bucket for this project.
 10. Open Firestore rules and paste the contents of `firestore.rules`.
 11. Open Storage rules and paste the contents of `storage.rules`.

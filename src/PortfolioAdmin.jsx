@@ -214,7 +214,6 @@ function downloadJsonFile(data, fileName) {
 export default function PortfolioAdmin({
   content,
   isConfigured,
-  ownerEmail,
   user,
   status,
   syncMessage,
@@ -806,7 +805,7 @@ export default function PortfolioAdmin({
             <div>
               <h1 className="text-3xl font-black tracking-[-0.03em] text-slate-900">Admin setup is ready but Firebase is not configured yet.</h1>
               <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">
-                Add your Firebase web config to `.env`, enable Google sign-in for `{ownerEmail}`, then reopen `/#/admin`.
+                Add your Firebase web config to `.env`, enable Google sign-in for your owner account, then reopen `/#/admin`.
               </p>
               <div className="mt-6">
                 <a href="#/" className="inline-flex rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white">
@@ -827,7 +826,7 @@ export default function PortfolioAdmin({
           <div className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-600">Secure Admin</div>
           <h1 className="mt-4 text-4xl font-black tracking-[-0.04em] text-slate-900">Only your Google account can edit this portfolio.</h1>
           <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
-            Sign in with <span className="font-semibold text-slate-900">{ownerEmail}</span>. The UI checks the owner email, and your database/storage rules should also allow writes only for that account.
+            Sign in with your authorized owner Google account. The UI checks the owner account, and your database and storage rules should also allow writes only for that account.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <button

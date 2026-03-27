@@ -264,7 +264,7 @@ function describeFirebaseError(error, fallback) {
     code === "storage/unauthorized" ||
     code === "storage/unauthenticated"
   ) {
-    return `Firebase denied this action. Deploy the Firestore and Storage rules from this project, then sign in again with ${OWNER_EMAIL}.`;
+    return "Firebase denied this action. Deploy the Firestore and Storage rules from this project, then sign in again with the authorized owner account.";
   }
 
   return message || fallback;
@@ -435,7 +435,7 @@ export default function App() {
 
           if (nextUser.email !== OWNER_EMAIL) {
             if (!cancelled) {
-              setStatus(`Only ${OWNER_EMAIL} can access the admin.`);
+              setStatus("This Google account is not authorized to access the admin.");
               setUser(null);
             }
             await signOut(auth);
@@ -571,7 +571,7 @@ export default function App() {
       const result = await signInWithPopup(auth, googleProvider);
       if (result.user.email !== OWNER_EMAIL) {
         await signOut(auth);
-        setStatus(`Only ${OWNER_EMAIL} can access the admin.`);
+        setStatus("This Google account is not authorized to access the admin.");
         return;
       }
 
@@ -766,12 +766,11 @@ export default function App() {
             />
           }
         >
-          <PortfolioAdmin
-            content={content}
-            isConfigured={isFirebaseConfigured}
-            ownerEmail={OWNER_EMAIL}
-            user={user}
-            status={status}
+        <PortfolioAdmin
+          content={content}
+          isConfigured={isFirebaseConfigured}
+          user={user}
+          status={status}
             syncMessage={syncMessage}
             isSaving={isSaving}
             uploadingTarget={uploadingTarget}
