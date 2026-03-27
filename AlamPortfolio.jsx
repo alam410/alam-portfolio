@@ -544,6 +544,29 @@ function ImageSlot({ src, alt, className = "", label = "Add image here" }) {
   );
 }
 
+function useTouchMotion() {
+  const [isTouchMotion, setIsTouchMotion] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return undefined;
+
+    const mediaQuery = window.matchMedia("(hover: none), (pointer: coarse)");
+    const updateTouchMode = () => setIsTouchMotion(mediaQuery.matches);
+
+    updateTouchMode();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateTouchMode);
+      return () => mediaQuery.removeEventListener("change", updateTouchMode);
+    }
+
+    mediaQuery.addListener(updateTouchMode);
+    return () => mediaQuery.removeListener(updateTouchMode);
+  }, []);
+
+  return isTouchMotion;
+}
+
 function DepthCard({
   children,
   className = "",
@@ -555,9 +578,16 @@ function DepthCard({
   style = {},
   surfaceStyle = {},
 }) {
+  const isTouchMotion = useTouchMotion();
+  const desktopHoverAnimation = hover ? { y: -10, rotateX: 7, rotateY: -7, scale: 1.01 } : undefined;
+  const touchRestAnimation = hover && isTouchMotion ? { y: -4, rotateX: 4, rotateY: -4, scale: 1.005 } : undefined;
+  const touchTapAnimation = hover && isTouchMotion ? { y: -1, rotateX: 1, rotateY: -1, scale: 0.992 } : undefined;
+
   return (
     <motion.div
-      whileHover={hover ? { y: -10, rotateX: 7, rotateY: -7, scale: 1.01 } : undefined}
+      animate={touchRestAnimation}
+      whileHover={!isTouchMotion ? desktopHoverAnimation : undefined}
+      whileTap={touchTapAnimation}
       transition={{ type: "spring", stiffness: 180, damping: 18, mass: 0.8 }}
       className={`relative ${className}`}
       style={{ transformStyle: "preserve-3d", transformPerspective: 1800, ...style }}
@@ -650,6 +680,7 @@ function ServiceCard({ item }) {
 function ProjectCard({ project }) {
   const projectImpact = project.impact || project.outcome;
   const projectMedia = useMemo(() => normalizeProjectMediaItems(project), [project]);
+  const isTouchMotion = useTouchMotion();
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
   const [activeMediaIsPortrait, setActiveMediaIsPortrait] = useState(false);
   const activeMedia = projectMedia[activeMediaIndex] || null;
@@ -752,8 +783,10 @@ function ProjectCard({ project }) {
             </div>
 
             <motion.div
-              whileHover={{ y: -8, rotateX: 10, rotateY: -8, rotate: 1.5 }}
-              transition={{ duration: 0.25 }}
+              animate={isTouchMotion ? { y: -5, rotateX: 7, rotateY: -7, rotate: 1.1 } : undefined}
+              whileHover={!isTouchMotion ? { y: -8, rotateX: 10, rotateY: -8, rotate: 1.5 } : undefined}
+              whileTap={isTouchMotion ? { y: -2, rotateX: 2, rotateY: -2, scale: 0.992 } : undefined}
+              transition={{ type: "spring", stiffness: 170, damping: 18, mass: 0.82 }}
               className="absolute bottom-5 left-5 right-5 h-[146px] rounded-[24px] border border-white/60 bg-white/92 p-3 shadow-[0_24px_42px_rgba(15,23,42,0.16)]"
               style={{ transformStyle: "preserve-3d", transformPerspective: 1200 }}
             >
