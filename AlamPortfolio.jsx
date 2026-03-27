@@ -780,34 +780,45 @@ function ProjectCard({ project }) {
   }, [activeMedia?.type, activeMedia?.url]);
 
   return (
-    <motion.div layout variants={fadeUp} className="h-full">
+    <motion.div
+      layout
+      variants={fadeUp}
+      className="h-full"
+      whileHover={!isTouchMotion ? { y: -8, rotateX: 3, rotateY: -3, scale: 1.008 } : undefined}
+      whileTap={isTouchMotion ? { y: -2, scale: 0.992 } : undefined}
+      transition={{ type: "spring", stiffness: 220, damping: 20, mass: 0.8 }}
+      style={{ transformStyle: "preserve-3d", transformPerspective: 1800 }}
+    >
       <DepthCard
         className="h-full rounded-[26px]"
         glow={`radial-gradient(circle at 15% 20%, ${project.accent}55, rgba(255,255,255,0))`}
         plate="rgba(255,255,255,0.36)"
         shadow="rgba(15,23,42,0.16)"
+        hover={false}
         surfaceClassName="h-full bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,244,238,0.95)_100%)]"
       >
         <div className="group flex h-full flex-col">
           <div className="relative h-[270px] overflow-hidden p-5" style={{ background: `linear-gradient(180deg, ${project.accent} 0%, rgba(255,255,255,0.88) 130%)` }}>
-            <div className="pointer-events-none absolute right-6 top-5 h-24 w-24 rounded-full bg-white/45 blur-2xl" />
-            <div className="mb-3 inline-flex rounded-full bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em]" style={{ color: palette.ink }}>
+            <div className="pointer-events-none absolute right-6 top-5 h-24 w-24 rounded-full bg-white/45 blur-2xl transition-all duration-500 group-hover:scale-125 group-hover:opacity-90" />
+            <div className="pointer-events-none absolute inset-y-0 -left-1/3 w-28 rotate-[16deg] bg-white/20 opacity-0 blur-2xl transition-all duration-700 group-hover:left-[118%] group-hover:opacity-100" />
+            <div className="mb-3 inline-flex rounded-full bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 group-hover:-translate-y-0.5" style={{ color: palette.ink }}>
               {project.category}
             </div>
-            <div className="relative z-10 max-w-[260px] text-[30px] font-black leading-none tracking-[-0.03em]" style={{ color: palette.ink }}>
+            <div className="relative z-10 max-w-[260px] text-[30px] font-black leading-none tracking-[-0.03em] transition-transform duration-300 group-hover:-translate-y-0.5" style={{ color: palette.ink }}>
               {project.title}
             </div>
 
             <motion.div
-              animate={isTouchMotion ? { y: -5, rotateX: 7, rotateY: -7, rotate: 1.1 } : undefined}
-              whileHover={!isTouchMotion ? { y: -8, rotateX: 10, rotateY: -8, rotate: 1.5 } : undefined}
-              whileTap={isTouchMotion ? { y: -2, rotateX: 2, rotateY: -2, scale: 0.992 } : undefined}
-              transition={{ type: "spring", stiffness: 170, damping: 18, mass: 0.82 }}
-              className="absolute bottom-5 left-5 right-5 h-[146px] rounded-[24px] border border-white/60 bg-white/92 p-3 shadow-[0_24px_42px_rgba(15,23,42,0.16)]"
+              animate={isTouchMotion ? { y: -3, rotateX: 3, rotateY: -3, scale: 1.006 } : undefined}
+              whileHover={!isTouchMotion ? { y: -6, rotateX: 4, rotateY: -4, scale: 1.015 } : undefined}
+              whileTap={isTouchMotion ? { y: -1, scale: 0.994 } : undefined}
+              transition={{ type: "spring", stiffness: 190, damping: 20, mass: 0.82 }}
+              className="absolute bottom-5 left-5 right-5 h-[146px] rounded-[24px] border border-white/60 bg-white/92 p-3 shadow-[0_24px_42px_rgba(15,23,42,0.16)] transition-shadow duration-300 group-hover:shadow-[0_28px_52px_rgba(15,23,42,0.18)]"
               style={{ transformStyle: "preserve-3d", transformPerspective: 1200 }}
             >
               <div className="pointer-events-none absolute inset-0 rounded-[24px] border border-white/60" style={{ transform: "translate3d(10px, 10px, -16px)" }} />
               <div className="relative h-full overflow-hidden rounded-[18px] bg-[#F8F4ED]">
+                <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-12 bg-gradient-to-b from-white/30 to-transparent" />
                 {activeMedia ? (
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -850,14 +861,14 @@ function ProjectCard({ project }) {
                               muted
                               loop
                               playsInline
-                              className="h-full w-full object-cover"
+                              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                             />
                           ) : (
                             <img
                               src={activeMedia.url}
                               alt={project.title}
                               loading="lazy"
-                              className="h-full w-full object-cover"
+                              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                             />
                           )}
                         </>
@@ -936,10 +947,10 @@ function ProjectCard({ project }) {
                   href={project.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-semibold"
+                  className="inline-flex items-center gap-2 text-sm font-semibold transition-transform duration-300 hover:-translate-y-0.5"
                   style={{ color: palette.coral }}
                 >
-                  View project <ExternalLink className="h-4 w-4" />
+                  View project <ExternalLink className="h-4 w-4 transition-transform duration-300 hover:translate-x-0.5 hover:-translate-y-0.5" />
                 </a>
               ) : (
                 <span className="text-sm font-semibold" style={{ color: palette.text }}>
@@ -956,22 +967,40 @@ function ProjectCard({ project }) {
 
 function OnlineProfileCard({ item }) {
   const Icon = item.icon;
+  const isTouchMotion = useTouchMotion();
 
   return (
-    <motion.a variants={fadeUp} href={item.href} target="_blank" rel="noreferrer" className="block">
+    <motion.a
+      variants={fadeUp}
+      href={item.href}
+      target="_blank"
+      rel="noreferrer"
+      className="block"
+      whileHover={!isTouchMotion ? { y: -6, rotateX: 2, rotateY: -2, scale: 1.01 } : undefined}
+      whileTap={isTouchMotion ? { y: -1, scale: 0.992 } : undefined}
+      transition={{ type: "spring", stiffness: 220, damping: 22, mass: 0.8 }}
+      style={{ transformStyle: "preserve-3d", transformPerspective: 1600 }}
+    >
       <DepthCard
         className="rounded-[22px]"
         glow={`radial-gradient(circle at 15% 20%, ${item.accent}55, rgba(255,255,255,0))`}
         surfaceClassName="bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(246,243,238,0.92)_100%)]"
         shadow="rgba(15,23,42,0.14)"
+        hover={false}
       >
-        <div className="group p-5">
+        <div className="group relative overflow-hidden p-5">
+          <div className="pointer-events-none absolute inset-y-0 -left-1/3 w-20 rotate-[18deg] bg-white/30 opacity-0 blur-2xl transition-all duration-700 group-hover:left-[118%] group-hover:opacity-100" />
           <div className="flex items-start justify-between gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]" style={{ backgroundColor: item.accent }}>
+            <div
+              className="relative flex h-12 w-12 items-center justify-center rounded-full shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:scale-105"
+              style={{ backgroundColor: item.accent }}
+            >
+              <div className="pointer-events-none absolute inset-0 rounded-full opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" style={{ backgroundColor: `${item.accent}66` }} />
               <Icon className="h-5 w-5" style={{ color: palette.ink }} />
             </div>
             <ExternalLink className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style={{ color: palette.ink }} />
           </div>
+          <div className="mt-6 h-[2px] w-12 rounded-full transition-all duration-300 group-hover:w-20" style={{ backgroundColor: `${item.accent}AA` }} />
           <div className="mt-8 text-[22px] font-bold tracking-[-0.03em]" style={{ color: palette.ink }}>{item.title}</div>
           <div className="mt-2 text-[14px] leading-7" style={{ color: palette.text }}>{item.handle}</div>
         </div>
