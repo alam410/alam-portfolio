@@ -574,6 +574,7 @@ export default function PortfolioAdmin({
           handle: "@yourhandle",
           href: "",
           iconKey: "globe",
+          iconImage: "",
           accent: "#2F7E75",
         },
       ],
@@ -643,6 +644,15 @@ export default function PortfolioAdmin({
           ...current,
           references: (current.references || []).map((item) =>
             item.id === itemId ? { ...item, image: url } : item,
+          ),
+        };
+      }
+
+      if (kind === "onlineProfileIcon") {
+        return {
+          ...current,
+          onlineProfiles: (current.onlineProfiles || []).map((item) =>
+            item.id === itemId ? { ...item, iconImage: url } : item,
           ),
         };
       }
@@ -1651,16 +1661,40 @@ export default function PortfolioAdmin({
                     <div className="lg:col-span-2"><Field label="Profile link"><TextInput value={item.href} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "href", event.target.value)} hint="If the link is empty, the card stays hidden on the public site." /></Field></div>
                   </FieldGroup>
 
-                  <FieldGroup title="Visual style" sub="Choose the icon and accent used for this card." columns="grid-cols-1" tone="warm">
+                  <FieldGroup title="Visual style" sub="Upload a real platform icon or keep a simple fallback icon." columns="grid-cols-1" tone="warm">
                     <Field label="Icon">
                       <select className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm" value={item.iconKey || "globe"} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "iconKey", event.target.value)}>
                         {profileIconOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
                       </select>
                     </Field>
                     <Field label="Accent color"><input type="color" value={item.accent || "#2F7E75"} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "accent", event.target.value)} className="h-12 w-full rounded-2xl border border-slate-200 bg-white p-2" /></Field>
+                    <UploadField
+                      label="Custom icon"
+                      description="Upload SVG, PNG, JPG, WebP, AVIF, or GIF. A custom icon overrides the dropdown icon on the public card."
+                      accept=".svg,image/svg+xml,image/png,image/jpeg,image/webp,image/avif,image/gif"
+                      onChange={(file) => handleUpload("onlineProfileIcon", file, item.id)}
+                      statusText={uploadingTarget === `onlineProfileIcon:${item.id}` ? "Uploading icon..." : item.iconImage || "No custom icon uploaded yet"}
+                      preview={
+                        <div className="rounded-[20px] border border-slate-200 bg-white p-4">
+                          <div className="flex h-20 items-center justify-center rounded-[16px] bg-slate-50">
+                            {item.iconImage ? (
+                              <img src={item.iconImage} alt={`${item.platform || item.name || "Profile"} icon preview`} className="h-12 w-12 object-contain" />
+                            ) : (
+                              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Icon preview</div>
+                            )}
+                          </div>
+                        </div>
+                      }
+                      buttonLabel="Upload icon"
+                    />
+                    {item.iconImage ? (
+                      <button type="button" onClick={() => updateObjectArray("onlineProfiles", item.id, "iconImage", "")} className="rounded-full border border-amber-200 px-4 py-2 text-sm font-semibold text-amber-700">
+                        Remove custom icon
+                      </button>
+                    ) : null}
                     <div className="rounded-[20px] border border-slate-200 bg-white px-4 py-4">
                       <div className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Preview note</div>
-                      <p className="mt-2 text-sm leading-6 text-slate-500">Keep the pill short, like <span className="font-semibold text-slate-900">GitHub</span> or <span className="font-semibold text-slate-900">Codeforces</span>, and use the main profile name for the larger heading.</p>
+                      <p className="mt-2 text-sm leading-6 text-slate-500">For real platform branding, upload the official icon file here. The dropdown is only a fallback if you do not upload one.</p>
                     </div>
                   </FieldGroup>
                 </div>

@@ -295,12 +295,6 @@ export const serviceIconOptions = [
 export const profileIconOptions = [
   { value: "github", label: "GitHub" },
   { value: "linkedin", label: "LinkedIn" },
-  { value: "leetcode", label: "LeetCode" },
-  { value: "codeforces", label: "Codeforces" },
-  { value: "hackerrank", label: "HackerRank" },
-  { value: "codechef", label: "CodeChef" },
-  { value: "atcoder", label: "AtCoder" },
-  { value: "kaggle", label: "Kaggle" },
   { value: "code", label: "Code" },
   { value: "award", label: "Award" },
   { value: "globe", label: "Globe" },
@@ -367,6 +361,7 @@ const onlineProfileTemplate = {
   handle: "",
   href: "",
   iconKey: "globe",
+  iconImage: "",
   accent: palette.teal,
 };
 
@@ -863,7 +858,19 @@ const profileIcons = {
 };
 
 function usesBrandProfileColors(iconKey = "") {
-  return iconKey === "codeforces";
+  return false;
+}
+
+function resolveProfileIcon(iconKey = "") {
+  if (["leetcode", "codeforces", "hackerrank", "codechef", "atcoder"].includes(iconKey)) {
+    return Code2;
+  }
+
+  if (iconKey === "kaggle") {
+    return Database;
+  }
+
+  return profileIcons[iconKey] || Globe;
 }
 
 const fallbackFocusWords = ["Think", "Grow", "Collaborate"];
@@ -1176,6 +1183,7 @@ function OnlineProfileCard({ item }) {
   const platformLabel = item.platform || item.title || "Profile";
   const profileName = item.name || item.handle || item.title || "Profile Name";
   const useBrandColors = item.useBrandColors;
+  const hasCustomIcon = Boolean(item.iconImage);
 
   return (
     <motion.a
@@ -1212,24 +1220,48 @@ function OnlineProfileCard({ item }) {
               <div
                 className="relative flex h-[54px] w-[54px] items-center justify-center overflow-hidden rounded-[18px] border shadow-[0_12px_24px_rgba(15,23,42,0.08)] transition-all duration-300 group-hover:-translate-y-0.5"
                 style={{
-                  borderColor: useBrandColors ? "rgba(15,23,42,0.16)" : `${item.accent}40`,
-                  background: useBrandColors
+                  borderColor: hasCustomIcon ? "rgba(23,56,74,0.12)" : useBrandColors ? "rgba(15,23,42,0.16)" : `${item.accent}40`,
+                  background: hasCustomIcon
+                    ? "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(246,243,237,0.98) 100%)"
+                    : useBrandColors
                     ? "linear-gradient(180deg, rgba(21,25,31,0.98) 0%, rgba(10,12,16,0.96) 100%)"
                     : `linear-gradient(180deg, rgba(255,255,255,0.92) 0%, ${item.accent}1C 100%)`,
                 }}
               >
                 <div
                   className="pointer-events-none absolute inset-x-0 top-0 h-[2px]"
-                  style={{ background: useBrandColors ? "linear-gradient(90deg, rgba(255,255,255,0.7), rgba(245,166,35,0.7))" : `linear-gradient(90deg, ${item.accent}, ${item.accent}80)` }}
+                  style={{
+                    background: hasCustomIcon
+                      ? `linear-gradient(90deg, ${item.accent}75, ${item.accent}35)`
+                      : useBrandColors
+                        ? "linear-gradient(90deg, rgba(255,255,255,0.7), rgba(245,166,35,0.7))"
+                        : `linear-gradient(90deg, ${item.accent}, ${item.accent}80)`,
+                  }}
                 />
                 <div
                   className="pointer-events-none absolute inset-0 opacity-80"
-                  style={{ background: useBrandColors ? "radial-gradient(circle at 30% 25%, rgba(255,255,255,0.12), transparent 60%)" : `radial-gradient(circle at 30% 25%, ${item.accent}18, transparent 60%)` }}
+                  style={{
+                    background: hasCustomIcon
+                      ? `radial-gradient(circle at 30% 25%, ${item.accent}10, transparent 60%)`
+                      : useBrandColors
+                        ? "radial-gradient(circle at 30% 25%, rgba(255,255,255,0.12), transparent 60%)"
+                        : `radial-gradient(circle at 30% 25%, ${item.accent}18, transparent 60%)`,
+                  }}
                 />
-                <Icon
-                  className={`relative z-10 ${useBrandColors ? "h-7 w-7" : "h-6 w-6"}`}
-                  style={useBrandColors ? undefined : { color: item.accent }}
-                />
+                {hasCustomIcon ? (
+                  <img
+                    src={item.iconImage}
+                    alt={`${platformLabel} icon`}
+                    className="relative z-10 h-8 w-8 object-contain"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <Icon
+                    className={`relative z-10 ${useBrandColors ? "h-7 w-7" : "h-6 w-6"}`}
+                    style={useBrandColors ? undefined : { color: item.accent }}
+                  />
+                )}
               </div>
               <div
                 className="rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em]"
@@ -1491,7 +1523,7 @@ export default function AlamPortfolio({
               : item.iconKey === "linkedin"
                 ? "Professional profile"
                 : formatLinkDisplay(item.href),
-          icon: profileIcons[item.iconKey] || Globe,
+          icon: resolveProfileIcon(item.iconKey),
           useBrandColors: usesBrandProfileColors(item.iconKey),
         })),
     [onlineProfiles, profile.fullName],

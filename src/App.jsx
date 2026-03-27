@@ -185,7 +185,9 @@ async function uploadWithCloudinary(kind, file, itemId) {
             ? "achievements"
             : kind === "referenceImage"
               ? "references"
-            : "certificates";
+              : kind === "onlineProfileIcon"
+                ? "profile-icons"
+                : "certificates";
 
   const formData = new FormData();
   formData.append("file", file);
@@ -691,7 +693,9 @@ export default function App() {
                     ? "achievements"
                     : kind === "referenceImage"
                       ? "references"
-                    : "certificates";
+                      : kind === "onlineProfileIcon"
+                        ? "profile-icons"
+                        : "certificates";
 
           const fileRef = ref(
             storage,
