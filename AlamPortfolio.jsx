@@ -847,7 +847,9 @@ function ProjectCard({ project }) {
           </div>
 
           <div className="flex flex-1 flex-col p-6">
-            <p className="text-[15px] leading-8" style={{ color: palette.text }}>{project.description}</p>
+            <p className="whitespace-pre-line break-words text-[15px] leading-8" style={{ color: palette.text }}>
+              {project.description}
+            </p>
             {project.role || projectImpact ? (
               <div className="mt-4 space-y-3">
                 {project.role ? (
