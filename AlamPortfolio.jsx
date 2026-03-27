@@ -114,6 +114,8 @@ const sectionCopy = {
   achievementGallerySub: "Reserve visual space for award photos, event pictures, and achievement moments.",
   certificatesTitle: "Certificates",
   certificatesSub: "Show your certificates here so you can keep growing this section over time.",
+  referencesTitle: "References",
+  referencesSub: "Words from mentors, collaborators, and people who have seen how I work up close.",
   profilesTitle: "Find Me Online",
   profilesSub:
     "These public profiles show my code, problem solving, professional background, and data work.",
@@ -223,6 +225,8 @@ const achievementGallery = [];
 
 const certificates = [];
 
+const references = [];
+
 const experience = [
   {
     org: "Schovarce Academy",
@@ -260,6 +264,7 @@ export const defaultPortfolioContent = {
   competitions,
   achievementGallery,
   certificates,
+  references,
   experience,
 };
 
@@ -326,6 +331,13 @@ const experienceTemplate = {
   sortDate: "",
 };
 
+const referenceTemplate = {
+  name: "",
+  designation: "",
+  quote: "",
+  image: "",
+};
+
 export function mergePortfolioContent(rawContent = {}) {
   return {
     ...defaultPortfolioContent,
@@ -351,6 +363,10 @@ export function mergePortfolioContent(rawContent = {}) {
     competitions: Array.isArray(rawContent.competitions) ? rawContent.competitions : defaultPortfolioContent.competitions,
     achievementGallery: normalizeArray(rawContent.achievementGallery, defaultPortfolioContent.achievementGallery, { allowEmpty: true }),
     certificates: normalizeArray(rawContent.certificates, defaultPortfolioContent.certificates, { allowEmpty: true }),
+    references: normalizeArray(rawContent.references, defaultPortfolioContent.references, { allowEmpty: true }).map((item) => ({
+      ...referenceTemplate,
+      ...item,
+    })),
     experience: normalizeArray(rawContent.experience, defaultPortfolioContent.experience, { allowEmpty: true }).map((item) => ({
       ...experienceTemplate,
       ...item,
@@ -1002,6 +1018,52 @@ function MediaCard({ item, eyebrow, fallbackLabel, metaLabel }) {
   );
 }
 
+function ReferenceCard({ item }) {
+  return (
+    <div className="min-w-[320px] max-w-[320px] shrink-0">
+      <DepthCard
+        className="h-full rounded-[28px]"
+        glow="radial-gradient(circle at 18% 18%, rgba(47,126,117,0.22), rgba(255,255,255,0))"
+        plate="rgba(255,255,255,0.34)"
+        shadow="rgba(15,23,42,0.12)"
+        surfaceClassName="h-full bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,244,238,0.95)_100%)] p-5"
+      >
+        <div className="flex h-full flex-col">
+          <div className="flex items-start gap-4">
+            <div className="h-16 w-16 shrink-0 overflow-hidden rounded-[18px] border bg-[#F8F4ED]" style={{ borderColor: palette.line }}>
+              <ImageSlot
+                src={item.image}
+                alt={item.name || "Reference"}
+                label="Reference image"
+                className="h-full w-full bg-[#F8F4ED]"
+              />
+            </div>
+            <div className="min-w-0">
+              <div className="text-[18px] font-bold tracking-[-0.03em]" style={{ color: palette.ink }}>
+                {item.name}
+              </div>
+              <div className="mt-1 text-[13px] leading-6" style={{ color: palette.text }}>
+                {item.designation}
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="mt-5 flex h-10 w-10 items-center justify-center rounded-full"
+            style={{ backgroundColor: "rgba(47,126,117,0.12)" }}
+          >
+            <MessageCircle className="h-4 w-4" style={{ color: palette.teal }} />
+          </div>
+
+          <p className="mt-4 text-[15px] leading-8" style={{ color: palette.ink }}>
+            "{item.quote}"
+          </p>
+        </div>
+      </DepthCard>
+    </div>
+  );
+}
+
 export default function AlamPortfolio({
   content = defaultPortfolioContent,
   onDownloadCv,
@@ -1020,6 +1082,7 @@ export default function AlamPortfolio({
     competitions,
     achievementGallery,
     certificates,
+    references,
     experience,
   } = mergedContent;
   const [activeFilter, setActiveFilter] = useState("All");
@@ -1067,6 +1130,23 @@ export default function AlamPortfolio({
   const visibleCertificates = useMemo(
     () => certificates.filter((item) => item?.image),
     [certificates],
+  );
+  const visibleReferences = useMemo(
+    () =>
+      references.filter(
+        (item) =>
+          item &&
+          (item.name || item.designation || item.quote || item.image) &&
+          item.name &&
+          item.designation &&
+          item.quote &&
+          item.image,
+      ),
+    [references],
+  );
+  const scrollingReferences = useMemo(
+    () => (visibleReferences.length > 1 ? [...visibleReferences, ...visibleReferences] : visibleReferences),
+    [visibleReferences],
   );
   const sortedExperience = useMemo(
     () =>
@@ -1742,6 +1822,57 @@ export default function AlamPortfolio({
               </div>
             ) : null}
           </motion.section>
+
+          {visibleReferences.length ? (
+            <motion.section
+              id="references"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.12 }}
+              variants={{ show: { transition: { staggerChildren: 0.08 } } }}
+              className="overflow-hidden px-6 py-16 md:px-10 lg:px-14 lg:py-20"
+              style={{ background: "linear-gradient(135deg, #fffdf8 0%, #eff7ff 100%)" }}
+            >
+              <motion.div variants={fadeUp} className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                <SectionTitle title={sectionCopy.referencesTitle} sub={sectionCopy.referencesSub} />
+                <div
+                  className="inline-flex rounded-full px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.16em]"
+                  style={{ color: palette.teal, backgroundColor: "rgba(47,126,117,0.1)" }}
+                >
+                  {String(visibleReferences.length).padStart(2, "0")} references
+                </div>
+              </motion.div>
+
+              <motion.div variants={fadeUp} className="relative mt-10">
+                <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#fffdf8] to-transparent md:w-24" />
+                <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#eff7ff] to-transparent md:w-24" />
+
+                <div className="overflow-hidden">
+                  <motion.div
+                    animate={
+                      visibleReferences.length > 1
+                        ? { x: ["0%", "-50%"] }
+                        : undefined
+                    }
+                    transition={
+                      visibleReferences.length > 1
+                        ? {
+                            duration: Math.max(28, visibleReferences.length * 8),
+                            repeat: Infinity,
+                            ease: "linear",
+                          }
+                        : undefined
+                    }
+                    className="flex w-max gap-6 pr-6"
+                  >
+                    {scrollingReferences.map((item, index) => (
+                      <ReferenceCard key={`${item.id || item.name}-${index}`} item={item} />
+                    ))}
+                  </motion.div>
+                </div>
+              </motion.div>
+            </motion.section>
+          ) : null}
 
           <motion.section id="profiles" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.12 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-6 py-16 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fffdf8 0%, #f2ecff 100%)" }}>
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">

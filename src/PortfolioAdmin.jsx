@@ -547,6 +547,21 @@ export default function PortfolioAdmin({
       ],
     }));
 
+  const addReference = () =>
+    updateDraft((current) => ({
+      ...current,
+      references: [
+        ...(current.references || []),
+        {
+          id: createId("reference"),
+          name: "Reference Name",
+          designation: "Role, organization",
+          quote: "Add the quotation or recommendation here.",
+          image: "",
+        },
+      ],
+    }));
+
   const removeItem = (key, id) =>
     updateDraft((current) => ({
       ...current,
@@ -601,6 +616,15 @@ export default function PortfolioAdmin({
         return {
           ...current,
           certificates: current.certificates.map((item) =>
+            item.id === itemId ? { ...item, image: url } : item,
+          ),
+        };
+      }
+
+      if (kind === "referenceImage") {
+        return {
+          ...current,
+          references: (current.references || []).map((item) =>
             item.id === itemId ? { ...item, image: url } : item,
           ),
         };
@@ -717,6 +741,7 @@ export default function PortfolioAdmin({
       { id: "admin-recognition", title: "Recognition", note: "Achievements and competitions", icon: Trophy },
       { id: "admin-gallery", title: "Achievement Photos", note: `${draft.achievementGallery?.length || 0} media cards`, icon: ImagePlus },
       { id: "admin-certificates", title: "Certificates", note: `${draft.certificates?.length || 0} certificate cards`, icon: BadgeCheck },
+      { id: "admin-references", title: "References", note: `${draft.references?.length || 0} reference cards`, icon: Sparkles },
     ],
     [draft],
   );
@@ -1119,8 +1144,10 @@ export default function PortfolioAdmin({
               <div className="lg:col-span-2"><Field label="Competitions subtitle"><TextArea value={draft.sectionCopy.competitionsSub} onChange={(event) => setSectionField("competitionsSub", event.target.value)} /></Field></div>
               <Field label="Achievement gallery title"><TextInput value={draft.sectionCopy.achievementGalleryTitle} onChange={(event) => setSectionField("achievementGalleryTitle", event.target.value)} /></Field>
               <Field label="Certificates title"><TextInput value={draft.sectionCopy.certificatesTitle} onChange={(event) => setSectionField("certificatesTitle", event.target.value)} /></Field>
+              <Field label="References title"><TextInput value={draft.sectionCopy.referencesTitle || ""} onChange={(event) => setSectionField("referencesTitle", event.target.value)} /></Field>
               <div className="lg:col-span-2"><Field label="Achievement gallery subtitle"><TextArea value={draft.sectionCopy.achievementGallerySub} onChange={(event) => setSectionField("achievementGallerySub", event.target.value)} /></Field></div>
               <div className="lg:col-span-2"><Field label="Certificates subtitle"><TextArea value={draft.sectionCopy.certificatesSub} onChange={(event) => setSectionField("certificatesSub", event.target.value)} /></Field></div>
+              <div className="lg:col-span-2"><Field label="References subtitle"><TextArea value={draft.sectionCopy.referencesSub || ""} onChange={(event) => setSectionField("referencesSub", event.target.value)} /></Field></div>
             </FieldGroup>
 
             <FieldGroup title="Profiles and contact copy" sub="These labels show in the online profiles section and the contact block." tone="cool">
@@ -1530,6 +1557,49 @@ export default function PortfolioAdmin({
                       onChange={(file) => handleUpload("certificateImage", file, item.id)}
                       statusText={uploadingTarget === `certificateImage:${item.id}` ? "Uploading image..." : item.image || "No image uploaded yet"}
                       preview={<ImagePreview src={item.image} label="Certificate preview" />}
+                      buttonLabel="Upload image"
+                    />
+                  </FieldGroup>
+                </div>
+              </ItemEditorCard>
+            ))}
+          </div>
+        </CardSection>
+
+        <CardSection id="admin-references" title="References" sub="Add mentors, supervisors, or collaborators with their photo, designation, and quotation." icon={Sparkles} badge="Reference cards" action={<button type="button" onClick={addReference} className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white">Add reference</button>}>
+          <div className="space-y-5">
+            {!draft.references?.length ? (
+              <div className="rounded-[28px] border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm text-slate-500">
+                No references yet. Add one from here and the public portfolio will show them in a moving horizontal row.
+              </div>
+            ) : null}
+            {(draft.references || []).map((item, index) => (
+              <ItemEditorCard
+                key={item.id}
+                eyebrow={`Reference ${String(index + 1).padStart(2, "0")}`}
+                title={item.name || "Reference name"}
+                sub={item.designation || "Add a designation"}
+                onRemove={() => removeItem("references", item.id)}
+                removeLabel="Remove reference"
+              >
+                <div className="grid gap-5 xl:grid-cols-[1fr_0.95fr]">
+                  <FieldGroup title="Reference details" sub="These details appear on the moving public cards." tone="cool">
+                    <Field label="Name"><TextInput value={item.name} onChange={(event) => updateObjectArray("references", item.id, "name", event.target.value)} /></Field>
+                    <Field label="Designation"><TextInput value={item.designation} onChange={(event) => updateObjectArray("references", item.id, "designation", event.target.value)} /></Field>
+                    <div className="lg:col-span-2">
+                      <Field label="Quotation">
+                        <TextArea value={item.quote} onChange={(event) => updateObjectArray("references", item.id, "quote", event.target.value)} />
+                      </Field>
+                    </div>
+                  </FieldGroup>
+                  <FieldGroup title="Reference image" sub="Upload a photo for the card." columns="grid-cols-1" tone="warm">
+                    <UploadField
+                      label="Reference photo"
+                      description="Use a clear headshot or portrait for this reference."
+                      accept="image/*"
+                      onChange={(file) => handleUpload("referenceImage", file, item.id)}
+                      statusText={uploadingTarget === `referenceImage:${item.id}` ? "Uploading image..." : item.image || "No image uploaded yet"}
+                      preview={<ImagePreview src={item.image} label="Reference preview" />}
                       buttonLabel="Upload image"
                     />
                   </FieldGroup>
