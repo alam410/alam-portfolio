@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import AlamPortfolio, {
   defaultPortfolioContent,
   mergePortfolioContent,
+  profileIconOptions,
   serviceIconOptions,
 } from "../AlamPortfolio.jsx";
 import {
@@ -780,6 +781,7 @@ export default function App() {
             onSave={handleSave}
             onUploadAsset={handleUploadAsset}
             serviceIconOptions={serviceIconOptions}
+            profileIconOptions={profileIconOptions}
           />
         </Suspense>
         <Analytics route={route} />

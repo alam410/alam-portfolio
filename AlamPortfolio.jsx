@@ -227,6 +227,8 @@ const certificates = [];
 
 const references = [];
 
+const onlineProfiles = getDefaultOnlineProfiles(profile);
+
 const experience = [
   {
     org: "Schovarce Academy",
@@ -265,6 +267,7 @@ export const defaultPortfolioContent = {
   achievementGallery,
   certificates,
   references,
+  onlineProfiles,
   experience,
 };
 
@@ -287,6 +290,20 @@ export const serviceIconOptions = [
   { value: "server", label: "Server" },
   { value: "shield", label: "Shield" },
   { value: "wrench", label: "Wrench" },
+];
+
+export const profileIconOptions = [
+  { value: "github", label: "GitHub" },
+  { value: "linkedin", label: "LinkedIn" },
+  { value: "code", label: "Code" },
+  { value: "award", label: "Award" },
+  { value: "globe", label: "Globe" },
+  { value: "briefcase", label: "Briefcase" },
+  { value: "brain", label: "Brain" },
+  { value: "database", label: "Database" },
+  { value: "rocket", label: "Rocket" },
+  { value: "book", label: "Book" },
+  { value: "mail", label: "Mail" },
 ];
 
 const withIds = (items = []) =>
@@ -338,14 +355,24 @@ const referenceTemplate = {
   image: "",
 };
 
+const onlineProfileTemplate = {
+  title: "",
+  handle: "",
+  href: "",
+  iconKey: "globe",
+  accent: palette.teal,
+};
+
 export function mergePortfolioContent(rawContent = {}) {
+  const mergedProfile = {
+    ...defaultPortfolioContent.profile,
+    ...(rawContent.profile || {}),
+  };
+
   return {
     ...defaultPortfolioContent,
     ...rawContent,
-    profile: {
-      ...defaultPortfolioContent.profile,
-      ...(rawContent.profile || {}),
-    },
+    profile: mergedProfile,
     sectionCopy: {
       ...defaultPortfolioContent.sectionCopy,
       ...(rawContent.sectionCopy || {}),
@@ -365,6 +392,14 @@ export function mergePortfolioContent(rawContent = {}) {
     certificates: normalizeArray(rawContent.certificates, defaultPortfolioContent.certificates, { allowEmpty: true }),
     references: normalizeArray(rawContent.references, defaultPortfolioContent.references, { allowEmpty: true }).map((item) => ({
       ...referenceTemplate,
+      ...item,
+    })),
+    onlineProfiles: normalizeArray(
+      Array.isArray(rawContent.onlineProfiles) ? rawContent.onlineProfiles : getDefaultOnlineProfiles(mergedProfile),
+      defaultPortfolioContent.onlineProfiles,
+      { allowEmpty: true },
+    ).map((item) => ({
+      ...onlineProfileTemplate,
       ...item,
     })),
     experience: normalizeArray(rawContent.experience, defaultPortfolioContent.experience, { allowEmpty: true }).map((item) => ({
@@ -500,6 +535,57 @@ function getLinkedinDisplay(value = "", fallbackName = "") {
       .join(" ");
   }
   return cleaned;
+}
+
+function getLeetcodeDisplay(value = "") {
+  const cleaned = formatLinkDisplay(value);
+  const match = cleaned.match(/^leetcode\.com\/u\/([^/?#]+)/i);
+  if (match?.[1]) {
+    return match[1];
+  }
+  return cleaned;
+}
+
+function getKaggleDisplay(value = "") {
+  const cleaned = formatLinkDisplay(value);
+  const match = cleaned.match(/^kaggle\.com\/([^/?#]+)/i);
+  if (match?.[1]) {
+    return match[1];
+  }
+  return cleaned;
+}
+
+function getDefaultOnlineProfiles(currentProfile = {}) {
+  return [
+    {
+      title: "GitHub",
+      handle: getGithubDisplay(currentProfile.github || ""),
+      href: currentProfile.github || "",
+      iconKey: "github",
+      accent: palette.teal,
+    },
+    {
+      title: "LinkedIn",
+      handle: getLinkedinDisplay(currentProfile.linkedin || "", currentProfile.fullName || ""),
+      href: currentProfile.linkedin || "",
+      iconKey: "linkedin",
+      accent: palette.coral,
+    },
+    {
+      title: "LeetCode",
+      handle: getLeetcodeDisplay(currentProfile.leetcode || ""),
+      href: currentProfile.leetcode || "",
+      iconKey: "code",
+      accent: palette.yellow,
+    },
+    {
+      title: "Kaggle",
+      handle: getKaggleDisplay(currentProfile.kaggle || ""),
+      href: currentProfile.kaggle || "",
+      iconKey: "award",
+      accent: palette.mint,
+    },
+  ].filter((item) => item.href);
 }
 
 function SectionTitle({ title, sub, center = false }) {
@@ -659,6 +745,20 @@ const serviceIcons = {
   server: Server,
   shield: ShieldCheck,
   wrench: Wrench,
+};
+
+const profileIcons = {
+  github: GithubIcon,
+  linkedin: LinkedinIcon,
+  code: Code2,
+  award: Award,
+  globe: Globe,
+  briefcase: Briefcase,
+  brain: Brain,
+  database: Database,
+  rocket: Rocket,
+  book: BookOpen,
+  mail: Mail,
 };
 
 const fallbackFocusWords = ["Think", "Grow", "Collaborate"];
@@ -981,56 +1081,82 @@ function OnlineProfileCard({ item }) {
       transition={{ type: "spring", stiffness: 220, damping: 22, mass: 0.8 }}
     >
       <div
-        className="relative h-full overflow-hidden rounded-[22px] border p-5 shadow-[0_14px_30px_rgba(15,23,42,0.05)] transition-all duration-300 group-hover:shadow-[0_20px_42px_rgba(15,23,42,0.09)]"
+        className="relative h-full overflow-hidden rounded-[24px] border p-5 shadow-[0_16px_34px_rgba(15,23,42,0.06)] transition-all duration-300 group-hover:shadow-[0_24px_48px_rgba(15,23,42,0.1)]"
         style={{
-          borderColor: "rgba(23,56,74,0.1)",
-          background: "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(247,244,239,0.94) 100%)",
+          borderColor: `${item.accent}22`,
+          background: `linear-gradient(180deg, rgba(255,255,255,0.96) 0%, ${item.accent}10 100%)`,
         }}
       >
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.78),transparent_45%)]" />
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-[3px]"
-          style={{ background: `linear-gradient(90deg, ${item.accent}, rgba(255,255,255,0))` }}
+          className="pointer-events-none absolute right-[-18px] top-[-20px] h-28 w-28 rounded-full blur-3xl transition-opacity duration-300 group-hover:opacity-100"
+          style={{ backgroundColor: `${item.accent}28`, opacity: 0.9 }}
         />
         <div
-          className="pointer-events-none absolute right-[-16px] top-[-10px] h-24 w-24 rounded-full opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-100"
-          style={{ backgroundColor: `${item.accent}28` }}
+          className="pointer-events-none absolute inset-x-5 top-0 h-[3px] rounded-full"
+          style={{ background: `linear-gradient(90deg, ${item.accent}, ${item.accent}00)` }}
         />
-        <div className="pointer-events-none absolute inset-y-0 -left-1/3 w-20 rotate-[18deg] bg-white/30 opacity-0 blur-2xl transition-all duration-700 group-hover:left-[118%] group-hover:opacity-100" />
+        <div className="pointer-events-none absolute inset-y-0 -left-1/3 w-24 rotate-[18deg] bg-white/35 opacity-0 blur-2xl transition-all duration-700 group-hover:left-[118%] group-hover:opacity-100" />
 
-        <div className="relative flex items-start justify-between gap-4">
+        <div className="relative flex h-full flex-col">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div
+                className="flex h-[52px] w-[52px] items-center justify-center rounded-[18px] shadow-[0_12px_24px_rgba(15,23,42,0.12)] transition-all duration-300 group-hover:-translate-y-0.5"
+                style={{ background: `linear-gradient(135deg, ${item.accent}, ${item.accent}D8)` }}
+              >
+                <Icon className="h-5 w-5 text-white" />
+              </div>
+              <div
+                className="rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em]"
+                style={{ backgroundColor: `${item.accent}16`, color: item.accent }}
+              >
+                {item.title}
+              </div>
+            </div>
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 group-hover:-translate-y-0.5"
+              style={{
+                borderColor: `${item.accent}30`,
+                backgroundColor: "rgba(255,255,255,0.72)",
+              }}
+            >
+              <ExternalLink className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style={{ color: palette.ink }} />
+            </div>
+          </div>
+
           <div
-            className="flex h-12 w-12 items-center justify-center rounded-[16px] border transition-all duration-300 group-hover:-translate-y-0.5"
+            className="relative mt-7 flex-1 rounded-[20px] border px-5 py-5 backdrop-blur-[1px]"
             style={{
-              backgroundColor: `${item.accent}22`,
-              borderColor: `${item.accent}55`,
+              borderColor: `${item.accent}20`,
+              background: `linear-gradient(180deg, rgba(255,255,255,0.72) 0%, ${item.accent}12 100%)`,
             }}
           >
-            <Icon className="h-5 w-5" style={{ color: palette.ink }} />
-          </div>
-          <div
-            className="flex h-10 w-10 items-center justify-center rounded-full border bg-white/88 transition-all duration-300 group-hover:border-transparent group-hover:bg-white"
-            style={{ borderColor: "rgba(23,56,74,0.1)" }}
-          >
-            <ExternalLink className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style={{ color: palette.ink }} />
-          </div>
-        </div>
+            <div className="text-[22px] font-bold tracking-[-0.03em]" style={{ color: palette.ink }}>
+              {item.title}
+            </div>
+            <div className="mt-3 text-[14px] leading-7" style={{ color: palette.text }}>
+              {item.handle}
+            </div>
 
-        <div className="relative mt-8">
-          <div
-            className="h-[2px] w-12 rounded-full transition-all duration-300 group-hover:w-20"
-            style={{ backgroundColor: `${item.accent}AA` }}
-          />
-          <div className="mt-5 text-[22px] font-bold tracking-[-0.03em] transition-transform duration-300 group-hover:-translate-y-0.5" style={{ color: palette.ink }}>
-            {item.title}
+            <div className="mt-6 flex items-center justify-between gap-3">
+              <div
+                className="h-[3px] w-14 rounded-full transition-all duration-300 group-hover:w-24"
+                style={{ backgroundColor: item.accent }}
+              />
+              <div
+                className="rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
+                style={{ color: palette.ink, backgroundColor: "rgba(255,255,255,0.68)" }}
+              >
+                Active
+              </div>
+            </div>
           </div>
-          <div className="mt-2 text-[14px] leading-7" style={{ color: palette.text }}>
-            {item.handle}
-          </div>
-        </div>
 
-        <div className="relative mt-6 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em]" style={{ color: palette.text }}>
-          Open profile
-          <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          <div className="relative mt-5 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em]" style={{ color: palette.ink }}>
+            Open profile
+            <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </div>
         </div>
       </div>
     </motion.a>
@@ -1140,6 +1266,7 @@ export default function AlamPortfolio({
     achievementGallery,
     certificates,
     references,
+    onlineProfiles,
     experience,
   } = mergedContent;
   const [activeFilter, setActiveFilter] = useState("All");
@@ -1224,38 +1351,16 @@ export default function AlamPortfolio({
     [experience],
   );
 
-  const onlineProfiles = useMemo(
-    () => [
-      {
-        title: "GitHub",
-        handle: "@alam410",
-        href: profile.github,
-        icon: GithubIcon,
-        accent: palette.teal,
-      },
-      {
-        title: "LinkedIn",
-        handle: profile.fullName,
-        href: profile.linkedin,
-        icon: LinkedinIcon,
-        accent: palette.coral,
-      },
-      {
-        title: "LeetCode",
-        handle: "alam_410",
-        href: profile.leetcode,
-        icon: Code2,
-        accent: palette.yellow,
-      },
-      {
-        title: "Kaggle",
-        handle: "alam410",
-        href: profile.kaggle,
-        icon: Award,
-        accent: palette.mint,
-      },
-    ].filter((item) => item.href),
-    [profile],
+  const visibleOnlineProfiles = useMemo(
+    () =>
+      (onlineProfiles || [])
+        .filter((item) => item?.href && item?.title)
+        .map((item) => ({
+          ...item,
+          handle: item.handle || formatLinkDisplay(item.href),
+          icon: profileIcons[item.iconKey] || Globe,
+        })),
+    [onlineProfiles],
   );
 
   const contactMethods = useMemo(
@@ -1585,7 +1690,7 @@ export default function AlamPortfolio({
                   </div>
                   <div className="relative overflow-hidden rounded-[18px] border p-4 shadow-[0_18px_34px_rgba(15,23,42,0.08)]" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(239,234,224,0.95) 100%)", borderColor: "rgba(255,255,255,0.55)" }}>
                     <div className="pointer-events-none absolute right-[-14px] top-[-14px] h-12 w-12 rounded-full blur-2xl" style={{ backgroundColor: "rgba(47,126,117,0.28)" }} />
-                    <div className="text-2xl font-black" style={{ color: palette.ink }}>{String(onlineProfiles.length).padStart(2, "0")}</div>
+                    <div className="text-2xl font-black" style={{ color: palette.ink }}>{String(visibleOnlineProfiles.length).padStart(2, "0")}</div>
                     <div className="mt-1 text-xs uppercase tracking-[0.14em]" style={{ color: palette.text }}>{sectionCopy.heroProfilesLabel}</div>
                   </div>
                   <div className="relative overflow-hidden rounded-[18px] border p-4 shadow-[0_18px_34px_rgba(15,23,42,0.08)]" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(239,234,224,0.95) 100%)", borderColor: "rgba(255,255,255,0.55)" }}>
@@ -1933,7 +2038,7 @@ export default function AlamPortfolio({
               </a>
             </div>
             <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-              {onlineProfiles.map((item) => <OnlineProfileCard key={item.title} item={item} />)}
+              {visibleOnlineProfiles.map((item) => <OnlineProfileCard key={item.id || item.title} item={item} />)}
             </div>
           </motion.section>
 

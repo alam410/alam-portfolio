@@ -225,6 +225,7 @@ export default function PortfolioAdmin({
   onSave,
   onUploadAsset,
   serviceIconOptions,
+  profileIconOptions,
 }) {
   const [draft, setDraft] = useState(() => mergePortfolioContent(content));
   const [pendingWelcomeWord, setPendingWelcomeWord] = useState("");
@@ -561,6 +562,22 @@ export default function PortfolioAdmin({
       ],
     }));
 
+  const addOnlineProfile = () =>
+    updateDraft((current) => ({
+      ...current,
+      onlineProfiles: [
+        ...(current.onlineProfiles || []),
+        {
+          id: createId("online-profile"),
+          title: "New Profile",
+          handle: "@yourhandle",
+          href: "",
+          iconKey: "globe",
+          accent: "#2F7E75",
+        },
+      ],
+    }));
+
   const removeItem = (key, id) =>
     updateDraft((current) => ({
       ...current,
@@ -741,6 +758,7 @@ export default function PortfolioAdmin({
       { id: "admin-gallery", title: "Achievement Photos", note: `${draft.achievementGallery?.length || 0} media cards`, icon: ImagePlus },
       { id: "admin-certificates", title: "Certificates", note: `${draft.certificates?.length || 0} certificate cards`, icon: BadgeCheck },
       { id: "admin-references", title: "References", note: `${draft.references?.length || 0} reference cards`, icon: Sparkles },
+      { id: "admin-online-profiles", title: "Online Profiles", note: `${draft.onlineProfiles?.length || 0} profile cards`, icon: Link2 },
     ],
     [draft],
   );
@@ -1601,6 +1619,47 @@ export default function PortfolioAdmin({
                       preview={<ImagePreview src={item.image} label="Reference preview" />}
                       buttonLabel="Upload image"
                     />
+                  </FieldGroup>
+                </div>
+              </ItemEditorCard>
+            ))}
+          </div>
+        </CardSection>
+
+        <CardSection id="admin-online-profiles" title="Online Profiles" sub="These cards power the Find Me Online section on the public portfolio." icon={Link2} badge="Social cards" action={<button type="button" onClick={addOnlineProfile} className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white">Add profile</button>}>
+          <div className="space-y-5">
+            {!draft.onlineProfiles?.length ? (
+              <div className="rounded-[28px] border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm text-slate-500">
+                No online profile cards yet. Add one here and it will appear in the public Find Me Online section.
+              </div>
+            ) : null}
+            {(draft.onlineProfiles || []).map((item, index) => (
+              <ItemEditorCard
+                key={item.id}
+                eyebrow={`Profile ${String(index + 1).padStart(2, "0")}`}
+                title={item.title || "Untitled profile"}
+                sub={item.handle || "Add a short handle or display name"}
+                onRemove={() => removeItem("onlineProfiles", item.id)}
+                removeLabel="Remove profile"
+              >
+                <div className="grid gap-5 xl:grid-cols-[1fr_260px]">
+                  <FieldGroup title="Profile details" sub="Edit the public title, handle, destination link, and accent color." tone="cool">
+                    <Field label="Title"><TextInput value={item.title} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "title", event.target.value)} /></Field>
+                    <Field label="Handle / display text"><TextInput value={item.handle} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "handle", event.target.value)} /></Field>
+                    <div className="lg:col-span-2"><Field label="Profile link"><TextInput value={item.href} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "href", event.target.value)} hint="If the link is empty, the card stays hidden on the public site." /></Field></div>
+                  </FieldGroup>
+
+                  <FieldGroup title="Visual style" sub="Choose the icon and accent used for this card." columns="grid-cols-1" tone="warm">
+                    <Field label="Icon">
+                      <select className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm" value={item.iconKey || "globe"} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "iconKey", event.target.value)}>
+                        {profileIconOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                      </select>
+                    </Field>
+                    <Field label="Accent color"><input type="color" value={item.accent || "#2F7E75"} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "accent", event.target.value)} className="h-12 w-full rounded-2xl border border-slate-200 bg-white p-2" /></Field>
+                    <div className="rounded-[20px] border border-slate-200 bg-white px-4 py-4">
+                      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Preview note</div>
+                      <p className="mt-2 text-sm leading-6 text-slate-500">Use a short handle like <span className="font-semibold text-slate-900">@alam410</span> or your full name if that looks more professional for the platform.</p>
+                    </div>
                   </FieldGroup>
                 </div>
               </ItemEditorCard>
