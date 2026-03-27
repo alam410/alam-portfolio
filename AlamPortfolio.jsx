@@ -295,6 +295,12 @@ export const serviceIconOptions = [
 export const profileIconOptions = [
   { value: "github", label: "GitHub" },
   { value: "linkedin", label: "LinkedIn" },
+  { value: "leetcode", label: "LeetCode" },
+  { value: "codeforces", label: "Codeforces" },
+  { value: "hackerrank", label: "HackerRank" },
+  { value: "codechef", label: "CodeChef" },
+  { value: "atcoder", label: "AtCoder" },
+  { value: "kaggle", label: "Kaggle" },
   { value: "code", label: "Code" },
   { value: "award", label: "Award" },
   { value: "globe", label: "Globe" },
@@ -308,7 +314,7 @@ export const profileIconOptions = [
 
 const withIds = (items = []) =>
   items.map((item, index) => ({
-    id: item.id || `${item.title || item.org || item.role || "item"}-${index + 1}`,
+    id: item.id || `${item.title || item.name || item.platform || item.org || item.role || "item"}-${index + 1}`,
     ...item,
   }));
 
@@ -356,7 +362,8 @@ const referenceTemplate = {
 };
 
 const onlineProfileTemplate = {
-  title: "",
+  platform: "",
+  name: "",
   handle: "",
   href: "",
   iconKey: "globe",
@@ -401,6 +408,8 @@ export function mergePortfolioContent(rawContent = {}) {
     ).map((item) => ({
       ...onlineProfileTemplate,
       ...item,
+      platform: item.platform || item.label || item.title || "",
+      name: item.name || mergedProfile.fullName || item.handle || item.title || "",
     })),
     experience: normalizeArray(rawContent.experience, defaultPortfolioContent.experience, { allowEmpty: true }).map((item) => ({
       ...experienceTemplate,
@@ -558,31 +567,35 @@ function getKaggleDisplay(value = "") {
 function getDefaultOnlineProfiles(currentProfile = {}) {
   return [
     {
-      title: "GitHub",
+      platform: "GitHub",
+      name: currentProfile.fullName || "Profile Name",
       handle: getGithubDisplay(currentProfile.github || ""),
       href: currentProfile.github || "",
       iconKey: "github",
       accent: palette.teal,
     },
     {
-      title: "LinkedIn",
-      handle: getLinkedinDisplay(currentProfile.linkedin || "", currentProfile.fullName || ""),
+      platform: "LinkedIn",
+      name: currentProfile.fullName || "Profile Name",
+      handle: "Professional profile",
       href: currentProfile.linkedin || "",
       iconKey: "linkedin",
       accent: palette.coral,
     },
     {
-      title: "LeetCode",
+      platform: "LeetCode",
+      name: currentProfile.fullName || "Profile Name",
       handle: getLeetcodeDisplay(currentProfile.leetcode || ""),
       href: currentProfile.leetcode || "",
-      iconKey: "code",
+      iconKey: "leetcode",
       accent: palette.yellow,
     },
     {
-      title: "Kaggle",
+      platform: "Kaggle",
+      name: currentProfile.fullName || "Profile Name",
       handle: getKaggleDisplay(currentProfile.kaggle || ""),
       href: currentProfile.kaggle || "",
-      iconKey: "award",
+      iconKey: "kaggle",
       accent: palette.mint,
     },
   ].filter((item) => item.href);
@@ -747,9 +760,74 @@ const serviceIcons = {
   wrench: Wrench,
 };
 
+function CodeforcesPlatformIcon({ className, style }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} style={style} fill="currentColor" aria-hidden="true">
+      <rect x="3" y="11" width="4" height="8" rx="1.4" />
+      <rect x="10" y="6" width="4" height="13" rx="1.4" />
+      <rect x="17" y="8.5" width="4" height="10.5" rx="1.4" />
+    </svg>
+  );
+}
+
+function HackerRankPlatformIcon({ className, style }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} style={style} fill="none" aria-hidden="true">
+      <path d="M8.2 4.8h7.6l3.6 7.2-3.6 7.2H8.2L4.6 12z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+      <path d="M9.4 8.2v7.6M14.6 8.2v7.6M9.4 12h5.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function CodeChefPlatformIcon({ className, style }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} style={style} fill="none" aria-hidden="true">
+      <path d="M8 7.2c0-1.2.98-2.2 2.2-2.2h3.6c1.22 0 2.2 1 2.2 2.2v2.1a4.6 4.6 0 0 1-4.6 4.6h-.8A4.6 4.6 0 0 1 8 9.3z" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M16 8.4h1.6A1.9 1.9 0 0 1 19.5 10v.3A2.7 2.7 0 0 1 16.8 13H16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M7.2 17.8h9.6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M10.5 14.1v3.2M13.5 14.1v3.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function AtCoderPlatformIcon({ className, style }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} style={style} fill="none" aria-hidden="true">
+      <path d="M12 5.2 6.4 18.8h3.1l1.1-2.9h2.8l1.1 2.9h3.1z" stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round" />
+      <path d="M11.2 13.1h1.6" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function LeetCodePlatformIcon({ className, style }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} style={style} fill="none" aria-hidden="true">
+      <path d="M14.8 5.3 20 10.6" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+      <path d="M11.2 8.2 6.1 13.3a2.9 2.9 0 0 0 0 4.1 2.9 2.9 0 0 0 4.1 0l2.1-2.1" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9.2 12h8.6" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function KagglePlatformIcon({ className, style }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} style={style} fill="none" aria-hidden="true">
+      <path d="M7.6 5.5v13" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+      <path d="M16.4 7.8 11 13.2l5.4 5" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M11 10.8 14 7.8" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 const profileIcons = {
   github: GithubIcon,
   linkedin: LinkedinIcon,
+  leetcode: LeetCodePlatformIcon,
+  codeforces: CodeforcesPlatformIcon,
+  hackerrank: HackerRankPlatformIcon,
+  codechef: CodeChefPlatformIcon,
+  atcoder: AtCoderPlatformIcon,
+  kaggle: KagglePlatformIcon,
   code: Code2,
   award: Award,
   globe: Globe,
@@ -1068,6 +1146,8 @@ function ProjectCard({ project }) {
 function OnlineProfileCard({ item }) {
   const Icon = item.icon;
   const isTouchMotion = useTouchMotion();
+  const platformLabel = item.platform || item.title || "Profile";
+  const profileName = item.name || item.handle || item.title || "Profile Name";
 
   return (
     <motion.a
@@ -1111,7 +1191,7 @@ function OnlineProfileCard({ item }) {
                 className="rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em]"
                 style={{ backgroundColor: `${item.accent}16`, color: item.accent }}
               >
-                {item.title}
+                {platformLabel}
               </div>
             </div>
             <div
@@ -1133,7 +1213,7 @@ function OnlineProfileCard({ item }) {
             }}
           >
             <div className="text-[22px] font-bold tracking-[-0.03em]" style={{ color: palette.ink }}>
-              {item.title}
+              {profileName}
             </div>
             <div className="mt-3 text-[14px] leading-7" style={{ color: palette.text }}>
               {item.handle}
@@ -1354,13 +1434,22 @@ export default function AlamPortfolio({
   const visibleOnlineProfiles = useMemo(
     () =>
       (onlineProfiles || [])
-        .filter((item) => item?.href && item?.title)
+        .filter((item) => item?.href && (item?.platform || item?.name))
         .map((item) => ({
           ...item,
-          handle: item.handle || formatLinkDisplay(item.href),
+          platform: item.platform || item.title || "",
+          name: item.name || profile.fullName || item.handle || item.title || "",
+          handle:
+            (item.handle || "").trim() &&
+            (item.handle || "").trim().toLowerCase() !==
+              (item.name || profile.fullName || item.title || "").trim().toLowerCase()
+              ? item.handle
+              : item.iconKey === "linkedin"
+                ? "Professional profile"
+                : formatLinkDisplay(item.href),
           icon: profileIcons[item.iconKey] || Globe,
         })),
-    [onlineProfiles],
+    [onlineProfiles, profile.fullName],
   );
 
   const contactMethods = useMemo(

@@ -569,7 +569,8 @@ export default function PortfolioAdmin({
         ...(current.onlineProfiles || []),
         {
           id: createId("online-profile"),
-          title: "New Profile",
+          platform: "Platform",
+          name: current.profile?.fullName || "Profile Name",
           handle: "@yourhandle",
           href: "",
           iconKey: "globe",
@@ -1637,14 +1638,15 @@ export default function PortfolioAdmin({
               <ItemEditorCard
                 key={item.id}
                 eyebrow={`Profile ${String(index + 1).padStart(2, "0")}`}
-                title={item.title || "Untitled profile"}
+                title={item.name || "Untitled profile"}
                 sub={item.handle || "Add a short handle or display name"}
                 onRemove={() => removeItem("onlineProfiles", item.id)}
                 removeLabel="Remove profile"
               >
                 <div className="grid gap-5 xl:grid-cols-[1fr_260px]">
-                  <FieldGroup title="Profile details" sub="Edit the public title, handle, destination link, and accent color." tone="cool">
-                    <Field label="Title"><TextInput value={item.title} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "title", event.target.value)} /></Field>
+                  <FieldGroup title="Profile details" sub="Edit the platform label, public profile name, handle, and destination link." tone="cool">
+                    <Field label="Platform label"><TextInput value={item.platform || item.title || ""} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "platform", event.target.value)} /></Field>
+                    <Field label="Profile name"><TextInput value={item.name || ""} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "name", event.target.value)} /></Field>
                     <Field label="Handle / display text"><TextInput value={item.handle} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "handle", event.target.value)} /></Field>
                     <div className="lg:col-span-2"><Field label="Profile link"><TextInput value={item.href} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "href", event.target.value)} hint="If the link is empty, the card stays hidden on the public site." /></Field></div>
                   </FieldGroup>
@@ -1658,7 +1660,7 @@ export default function PortfolioAdmin({
                     <Field label="Accent color"><input type="color" value={item.accent || "#2F7E75"} onChange={(event) => updateObjectArray("onlineProfiles", item.id, "accent", event.target.value)} className="h-12 w-full rounded-2xl border border-slate-200 bg-white p-2" /></Field>
                     <div className="rounded-[20px] border border-slate-200 bg-white px-4 py-4">
                       <div className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Preview note</div>
-                      <p className="mt-2 text-sm leading-6 text-slate-500">Use a short handle like <span className="font-semibold text-slate-900">@alam410</span> or your full name if that looks more professional for the platform.</p>
+                      <p className="mt-2 text-sm leading-6 text-slate-500">Keep the pill short, like <span className="font-semibold text-slate-900">GitHub</span> or <span className="font-semibold text-slate-900">Codeforces</span>, and use the main profile name for the larger heading.</p>
                     </div>
                   </FieldGroup>
                 </div>
