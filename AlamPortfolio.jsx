@@ -1093,12 +1093,13 @@ export default function AlamPortfolio({
   const phoneDisplay = useMemo(() => formatPhoneDisplay(profile.phone), [profile.phone]);
   const whatsappHref = useMemo(() => getWhatsAppHref(profile.phone), [profile.phone]);
   const locationDisplay = useMemo(() => formatLocationDisplay(profile.location), [profile.location]);
-  const roleSegments = useMemo(
+  const headerRoleText = useMemo(
     () =>
       String(profile.role || "")
         .split("|")
         .map((part) => part.trim())
-        .filter(Boolean),
+        .filter(Boolean)
+        .join(" | "),
     [profile.role],
   );
   const heroLoopWords = useMemo(
@@ -1377,19 +1378,10 @@ export default function AlamPortfolio({
             <div className="min-w-0 max-w-[250px] sm:max-w-[340px]">
               <div className="text-[30px] italic leading-none" style={{ color: palette.ink, fontFamily: "cursive" }}>{profile.name}</div>
               <div
-                className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs leading-5"
+                className="mt-1 text-xs leading-5 break-words"
                 style={{ color: palette.text }}
               >
-                {roleSegments.length ? (
-                  roleSegments.map((segment, index) => (
-                    <React.Fragment key={`${segment}-${index}`}>
-                      <span>{segment}</span>
-                      {index !== roleSegments.length - 1 ? <span aria-hidden="true">|</span> : null}
-                    </React.Fragment>
-                  ))
-                ) : (
-                  <span>{profile.role}</span>
-                )}
+                {headerRoleText || profile.role}
               </div>
             </div>
 
