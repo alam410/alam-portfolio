@@ -975,36 +975,64 @@ function OnlineProfileCard({ item }) {
       href={item.href}
       target="_blank"
       rel="noreferrer"
-      className="block"
-      whileHover={!isTouchMotion ? { y: -6, rotateX: 2, rotateY: -2, scale: 1.01 } : undefined}
+      className="group block h-full"
+      whileHover={!isTouchMotion ? { y: -5, scale: 1.01 } : undefined}
       whileTap={isTouchMotion ? { y: -1, scale: 0.992 } : undefined}
       transition={{ type: "spring", stiffness: 220, damping: 22, mass: 0.8 }}
-      style={{ transformStyle: "preserve-3d", transformPerspective: 1600 }}
     >
-      <DepthCard
-        className="rounded-[22px]"
-        glow={`radial-gradient(circle at 15% 20%, ${item.accent}55, rgba(255,255,255,0))`}
-        surfaceClassName="bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(246,243,238,0.92)_100%)]"
-        shadow="rgba(15,23,42,0.14)"
-        hover={false}
+      <div
+        className="relative h-full overflow-hidden rounded-[22px] border p-5 shadow-[0_14px_30px_rgba(15,23,42,0.05)] transition-all duration-300 group-hover:shadow-[0_20px_42px_rgba(15,23,42,0.09)]"
+        style={{
+          borderColor: "rgba(23,56,74,0.1)",
+          background: "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(247,244,239,0.94) 100%)",
+        }}
       >
-        <div className="group relative overflow-hidden p-5">
-          <div className="pointer-events-none absolute inset-y-0 -left-1/3 w-20 rotate-[18deg] bg-white/30 opacity-0 blur-2xl transition-all duration-700 group-hover:left-[118%] group-hover:opacity-100" />
-          <div className="flex items-start justify-between gap-4">
-            <div
-              className="relative flex h-12 w-12 items-center justify-center rounded-full shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:scale-105"
-              style={{ backgroundColor: item.accent }}
-            >
-              <div className="pointer-events-none absolute inset-0 rounded-full opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" style={{ backgroundColor: `${item.accent}66` }} />
-              <Icon className="h-5 w-5" style={{ color: palette.ink }} />
-            </div>
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-[3px]"
+          style={{ background: `linear-gradient(90deg, ${item.accent}, rgba(255,255,255,0))` }}
+        />
+        <div
+          className="pointer-events-none absolute right-[-16px] top-[-10px] h-24 w-24 rounded-full opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-100"
+          style={{ backgroundColor: `${item.accent}28` }}
+        />
+        <div className="pointer-events-none absolute inset-y-0 -left-1/3 w-20 rotate-[18deg] bg-white/30 opacity-0 blur-2xl transition-all duration-700 group-hover:left-[118%] group-hover:opacity-100" />
+
+        <div className="relative flex items-start justify-between gap-4">
+          <div
+            className="flex h-12 w-12 items-center justify-center rounded-[16px] border transition-all duration-300 group-hover:-translate-y-0.5"
+            style={{
+              backgroundColor: `${item.accent}22`,
+              borderColor: `${item.accent}55`,
+            }}
+          >
+            <Icon className="h-5 w-5" style={{ color: palette.ink }} />
+          </div>
+          <div
+            className="flex h-10 w-10 items-center justify-center rounded-full border bg-white/88 transition-all duration-300 group-hover:border-transparent group-hover:bg-white"
+            style={{ borderColor: "rgba(23,56,74,0.1)" }}
+          >
             <ExternalLink className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style={{ color: palette.ink }} />
           </div>
-          <div className="mt-6 h-[2px] w-12 rounded-full transition-all duration-300 group-hover:w-20" style={{ backgroundColor: `${item.accent}AA` }} />
-          <div className="mt-8 text-[22px] font-bold tracking-[-0.03em]" style={{ color: palette.ink }}>{item.title}</div>
-          <div className="mt-2 text-[14px] leading-7" style={{ color: palette.text }}>{item.handle}</div>
         </div>
-      </DepthCard>
+
+        <div className="relative mt-8">
+          <div
+            className="h-[2px] w-12 rounded-full transition-all duration-300 group-hover:w-20"
+            style={{ backgroundColor: `${item.accent}AA` }}
+          />
+          <div className="mt-5 text-[22px] font-bold tracking-[-0.03em] transition-transform duration-300 group-hover:-translate-y-0.5" style={{ color: palette.ink }}>
+            {item.title}
+          </div>
+          <div className="mt-2 text-[14px] leading-7" style={{ color: palette.text }}>
+            {item.handle}
+          </div>
+        </div>
+
+        <div className="relative mt-6 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em]" style={{ color: palette.text }}>
+          Open profile
+          <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        </div>
+      </div>
     </motion.a>
   );
 }
