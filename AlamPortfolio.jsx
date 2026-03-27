@@ -1412,6 +1412,7 @@ export default function AlamPortfolio({
               </motion.a>
               <NavLink href="#works">Projects</NavLink>
               <NavLink href="#experience">Experience</NavLink>
+              {visibleReferences.length ? <NavLink href="#references">References</NavLink> : null}
               <NavLink href="#profiles">Profiles</NavLink>
               <NavLink href="#contact">Contact</NavLink>
             </nav>
@@ -1471,6 +1472,7 @@ export default function AlamPortfolio({
                   <NavLink href="#services" onClick={() => setMenuOpen(false)}>Services</NavLink>
                   <NavLink href="#works" onClick={() => setMenuOpen(false)}>Projects</NavLink>
                   <NavLink href="#experience" onClick={() => setMenuOpen(false)}>Experience</NavLink>
+                  {visibleReferences.length ? <NavLink href="#references" onClick={() => setMenuOpen(false)}>References</NavLink> : null}
                   <NavLink href="#profiles" onClick={() => setMenuOpen(false)}>Profiles</NavLink>
                   <NavLink href="#contact" onClick={() => setMenuOpen(false)}>Contact</NavLink>
                   {showAdminEntry ? <NavLink href={adminHref} onClick={() => setMenuOpen(false)}>Owner Login</NavLink> : null}
