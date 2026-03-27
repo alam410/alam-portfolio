@@ -1,4 +1,5 @@
 import React, { Suspense, lazy, useCallback, useEffect, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import AlamPortfolio, {
   defaultPortfolioContent,
@@ -748,6 +749,7 @@ export default function App() {
           title="Fetching portfolio"
           subtitle="Preparing your saved content..."
         />
+        <Analytics route={route} />
         <SpeedInsights route={route} />
       </>
     );
@@ -781,6 +783,7 @@ export default function App() {
             serviceIconOptions={serviceIconOptions}
           />
         </Suspense>
+        <Analytics route={route} />
         <SpeedInsights route={route} />
       </>
     );
@@ -795,6 +798,7 @@ export default function App() {
         adminHref="#/admin"
         showAdminEntry
       />
+      <Analytics route={route} />
       <SpeedInsights route={route} />
     </>
   );
