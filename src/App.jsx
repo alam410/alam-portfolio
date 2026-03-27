@@ -1,4 +1,5 @@
 import React, { Suspense, lazy, useCallback, useEffect, useState } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import AlamPortfolio, {
   defaultPortfolioContent,
   mergePortfolioContent,
@@ -742,50 +743,59 @@ export default function App() {
 
   if (!isContentReady) {
     return (
-      <LoadingScreen
-        title="Fetching portfolio"
-        subtitle="Preparing your saved content..."
-      />
+      <>
+        <LoadingScreen
+          title="Fetching portfolio"
+          subtitle="Preparing your saved content..."
+        />
+        <SpeedInsights route={route} />
+      </>
     );
   }
 
   if (route === "/admin") {
     return (
-      <Suspense
-        fallback={
-          <LoadingScreen
-            title="Opening admin"
-            subtitle="Preparing your editor..."
+      <>
+        <Suspense
+          fallback={
+            <LoadingScreen
+              title="Opening admin"
+              subtitle="Preparing your editor..."
+            />
+          }
+        >
+          <PortfolioAdmin
+            content={content}
+            isConfigured={isFirebaseConfigured}
+            ownerEmail={OWNER_EMAIL}
+            user={user}
+            status={status}
+            syncMessage={syncMessage}
+            isSaving={isSaving}
+            uploadingTarget={uploadingTarget}
+            uploadProvider={UPLOAD_PROVIDER}
+            onSignIn={handleSignIn}
+            onSignOut={handleSignOut}
+            onSave={handleSave}
+            onUploadAsset={handleUploadAsset}
+            serviceIconOptions={serviceIconOptions}
           />
-        }
-      >
-        <PortfolioAdmin
-          content={content}
-          isConfigured={isFirebaseConfigured}
-          ownerEmail={OWNER_EMAIL}
-          user={user}
-          status={status}
-          syncMessage={syncMessage}
-          isSaving={isSaving}
-          uploadingTarget={uploadingTarget}
-          uploadProvider={UPLOAD_PROVIDER}
-          onSignIn={handleSignIn}
-          onSignOut={handleSignOut}
-          onSave={handleSave}
-          onUploadAsset={handleUploadAsset}
-          serviceIconOptions={serviceIconOptions}
-        />
-      </Suspense>
+        </Suspense>
+        <SpeedInsights route={route} />
+      </>
     );
   }
 
   return (
-    <AlamPortfolio
-      content={content}
-      onDownloadCv={handleDownloadCv}
-      isDownloadingCv={isDownloadingCv}
-      adminHref="#/admin"
-      showAdminEntry
-    />
+    <>
+      <AlamPortfolio
+        content={content}
+        onDownloadCv={handleDownloadCv}
+        isDownloadingCv={isDownloadingCv}
+        adminHref="#/admin"
+        showAdminEntry
+      />
+      <SpeedInsights route={route} />
+    </>
   );
 }
