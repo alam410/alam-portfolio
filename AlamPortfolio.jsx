@@ -763,9 +763,9 @@ const serviceIcons = {
 function CodeforcesPlatformIcon({ className, style }) {
   return (
     <svg viewBox="0 0 24 24" className={className} style={style} fill="currentColor" aria-hidden="true">
-      <rect x="3" y="11" width="4" height="8" rx="1.4" />
-      <rect x="10" y="6" width="4" height="13" rx="1.4" />
-      <rect x="17" y="8.5" width="4" height="10.5" rx="1.4" />
+      <rect x="3" y="12" width="4.2" height="7" rx="1.3" />
+      <rect x="9.8" y="6" width="4.2" height="13" rx="1.3" />
+      <rect x="16.6" y="9" width="4.2" height="10" rx="1.3" />
     </svg>
   );
 }
@@ -773,8 +773,8 @@ function CodeforcesPlatformIcon({ className, style }) {
 function HackerRankPlatformIcon({ className, style }) {
   return (
     <svg viewBox="0 0 24 24" className={className} style={style} fill="none" aria-hidden="true">
-      <path d="M8.2 4.8h7.6l3.6 7.2-3.6 7.2H8.2L4.6 12z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
-      <path d="M9.4 8.2v7.6M14.6 8.2v7.6M9.4 12h5.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M8 4.9h8l4 7.1-4 7.1H8L4 12z" stroke="currentColor" strokeWidth="2.1" strokeLinejoin="round" />
+      <path d="M9.2 8.2v7.6M14.8 8.2v7.6M9.2 12h5.6" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" />
     </svg>
   );
 }
@@ -782,10 +782,10 @@ function HackerRankPlatformIcon({ className, style }) {
 function CodeChefPlatformIcon({ className, style }) {
   return (
     <svg viewBox="0 0 24 24" className={className} style={style} fill="none" aria-hidden="true">
-      <path d="M8 7.2c0-1.2.98-2.2 2.2-2.2h3.6c1.22 0 2.2 1 2.2 2.2v2.1a4.6 4.6 0 0 1-4.6 4.6h-.8A4.6 4.6 0 0 1 8 9.3z" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M16 8.4h1.6A1.9 1.9 0 0 1 19.5 10v.3A2.7 2.7 0 0 1 16.8 13H16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M7.2 17.8h9.6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M10.5 14.1v3.2M13.5 14.1v3.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M7.8 8.1c0-1.5 1.2-2.7 2.7-2.7h3c1.5 0 2.7 1.2 2.7 2.7v1.8a4.2 4.2 0 0 1-4.2 4.2h-.8a4.2 4.2 0 0 1-4.2-4.2z" stroke="currentColor" strokeWidth="2" />
+      <path d="M16.2 8.8h1.2a1.8 1.8 0 0 1 1.8 1.8v.1a2.3 2.3 0 0 1-2.3 2.3h-.7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M8.2 18.1h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M10.7 14.1v3.2M13.5 14.1v3.2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -793,8 +793,9 @@ function CodeChefPlatformIcon({ className, style }) {
 function AtCoderPlatformIcon({ className, style }) {
   return (
     <svg viewBox="0 0 24 24" className={className} style={style} fill="none" aria-hidden="true">
-      <path d="M12 5.2 6.4 18.8h3.1l1.1-2.9h2.8l1.1 2.9h3.1z" stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round" />
-      <path d="M11.2 13.1h1.6" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+      <path d="M12 5.1 6.8 18.9h3.1l1-2.8h2.3l1 2.8h3.1z" stroke="currentColor" strokeWidth="2.1" strokeLinejoin="round" />
+      <path d="M10.7 12.9h2.6" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" />
+      <path d="M18.8 8.9a2.8 2.8 0 1 0 0 6.2" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" />
     </svg>
   );
 }
@@ -802,9 +803,9 @@ function AtCoderPlatformIcon({ className, style }) {
 function LeetCodePlatformIcon({ className, style }) {
   return (
     <svg viewBox="0 0 24 24" className={className} style={style} fill="none" aria-hidden="true">
-      <path d="M14.8 5.3 20 10.6" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
-      <path d="M11.2 8.2 6.1 13.3a2.9 2.9 0 0 0 0 4.1 2.9 2.9 0 0 0 4.1 0l2.1-2.1" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M9.2 12h8.6" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+      <path d="M15.5 5.3 20.1 9.9" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" />
+      <path d="M11.5 8 6.4 13.1a2.8 2.8 0 0 0 0 4 2.8 2.8 0 0 0 4 0l1.6-1.6" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9.4 12h8" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" />
     </svg>
   );
 }
@@ -812,9 +813,9 @@ function LeetCodePlatformIcon({ className, style }) {
 function KagglePlatformIcon({ className, style }) {
   return (
     <svg viewBox="0 0 24 24" className={className} style={style} fill="none" aria-hidden="true">
-      <path d="M7.6 5.5v13" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
-      <path d="M16.4 7.8 11 13.2l5.4 5" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M11 10.8 14 7.8" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+      <path d="M8 5.4v13.2" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" />
+      <path d="M16.4 7.6 11.2 12.8l5.2 5" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M11.2 11 14.2 8" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" />
     </svg>
   );
 }
@@ -1182,14 +1183,25 @@ function OnlineProfileCard({ item }) {
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-3">
               <div
-                className="flex h-[52px] w-[52px] items-center justify-center rounded-[18px] shadow-[0_12px_24px_rgba(15,23,42,0.12)] transition-all duration-300 group-hover:-translate-y-0.5"
-                style={{ background: `linear-gradient(135deg, ${item.accent}, ${item.accent}D8)` }}
+                className="relative flex h-[54px] w-[54px] items-center justify-center overflow-hidden rounded-[18px] border shadow-[0_12px_24px_rgba(15,23,42,0.08)] transition-all duration-300 group-hover:-translate-y-0.5"
+                style={{
+                  borderColor: `${item.accent}40`,
+                  background: `linear-gradient(180deg, rgba(255,255,255,0.92) 0%, ${item.accent}1C 100%)`,
+                }}
               >
-                <Icon className="h-5 w-5 text-white" />
+                <div
+                  className="pointer-events-none absolute inset-x-0 top-0 h-[2px]"
+                  style={{ background: `linear-gradient(90deg, ${item.accent}, ${item.accent}80)` }}
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-80"
+                  style={{ background: `radial-gradient(circle at 30% 25%, ${item.accent}18, transparent 60%)` }}
+                />
+                <Icon className="relative z-10 h-6 w-6" style={{ color: item.accent }} />
               </div>
               <div
                 className="rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em]"
-                style={{ backgroundColor: `${item.accent}16`, color: item.accent }}
+                style={{ backgroundColor: `${item.accent}14`, color: item.accent, border: `1px solid ${item.accent}24` }}
               >
                 {platformLabel}
               </div>
