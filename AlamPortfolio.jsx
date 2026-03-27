@@ -762,10 +762,32 @@ const serviceIcons = {
 
 function CodeforcesPlatformIcon({ className, style }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} style={style} fill="currentColor" aria-hidden="true">
-      <rect x="3" y="12" width="4.2" height="7" rx="1.3" />
-      <rect x="9.8" y="6" width="4.2" height="13" rx="1.3" />
-      <rect x="16.6" y="9" width="4.2" height="10" rx="1.3" />
+    <svg viewBox="0 0 24 24" className={className} style={style} fill="none" aria-hidden="true">
+      <path
+        d="M10.4 3.8 4.1 10.1a2.1 2.1 0 0 0 0 2.97l6.3 6.3"
+        stroke="#FFFFFF"
+        strokeWidth="4.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M11.4 5.1 16.7 10.4"
+        stroke="#F5A623"
+        strokeWidth="4.3"
+        strokeLinecap="round"
+      />
+      <path
+        d="M11.9 12h7"
+        stroke="#B9BEC6"
+        strokeWidth="4.3"
+        strokeLinecap="round"
+      />
+      <path
+        d="M11.4 18.9 16.7 13.6"
+        stroke="#F5A623"
+        strokeWidth="4.3"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -839,6 +861,10 @@ const profileIcons = {
   book: BookOpen,
   mail: Mail,
 };
+
+function usesBrandProfileColors(iconKey = "") {
+  return iconKey === "codeforces";
+}
 
 const fallbackFocusWords = ["Think", "Grow", "Collaborate"];
 const fallbackWelcomeWords = ["Hello", "Ciao", "Hola", "Salut", "你好", "Hallo", "Ola", "Selam", "Dia Dhuit"];
@@ -1149,6 +1175,7 @@ function OnlineProfileCard({ item }) {
   const isTouchMotion = useTouchMotion();
   const platformLabel = item.platform || item.title || "Profile";
   const profileName = item.name || item.handle || item.title || "Profile Name";
+  const useBrandColors = item.useBrandColors;
 
   return (
     <motion.a
@@ -1185,19 +1212,24 @@ function OnlineProfileCard({ item }) {
               <div
                 className="relative flex h-[54px] w-[54px] items-center justify-center overflow-hidden rounded-[18px] border shadow-[0_12px_24px_rgba(15,23,42,0.08)] transition-all duration-300 group-hover:-translate-y-0.5"
                 style={{
-                  borderColor: `${item.accent}40`,
-                  background: `linear-gradient(180deg, rgba(255,255,255,0.92) 0%, ${item.accent}1C 100%)`,
+                  borderColor: useBrandColors ? "rgba(15,23,42,0.16)" : `${item.accent}40`,
+                  background: useBrandColors
+                    ? "linear-gradient(180deg, rgba(21,25,31,0.98) 0%, rgba(10,12,16,0.96) 100%)"
+                    : `linear-gradient(180deg, rgba(255,255,255,0.92) 0%, ${item.accent}1C 100%)`,
                 }}
               >
                 <div
                   className="pointer-events-none absolute inset-x-0 top-0 h-[2px]"
-                  style={{ background: `linear-gradient(90deg, ${item.accent}, ${item.accent}80)` }}
+                  style={{ background: useBrandColors ? "linear-gradient(90deg, rgba(255,255,255,0.7), rgba(245,166,35,0.7))" : `linear-gradient(90deg, ${item.accent}, ${item.accent}80)` }}
                 />
                 <div
                   className="pointer-events-none absolute inset-0 opacity-80"
-                  style={{ background: `radial-gradient(circle at 30% 25%, ${item.accent}18, transparent 60%)` }}
+                  style={{ background: useBrandColors ? "radial-gradient(circle at 30% 25%, rgba(255,255,255,0.12), transparent 60%)" : `radial-gradient(circle at 30% 25%, ${item.accent}18, transparent 60%)` }}
                 />
-                <Icon className="relative z-10 h-6 w-6" style={{ color: item.accent }} />
+                <Icon
+                  className={`relative z-10 ${useBrandColors ? "h-7 w-7" : "h-6 w-6"}`}
+                  style={useBrandColors ? undefined : { color: item.accent }}
+                />
               </div>
               <div
                 className="rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em]"
@@ -1460,6 +1492,7 @@ export default function AlamPortfolio({
                 ? "Professional profile"
                 : formatLinkDisplay(item.href),
           icon: profileIcons[item.iconKey] || Globe,
+          useBrandColors: usesBrandProfileColors(item.iconKey),
         })),
     [onlineProfiles, profile.fullName],
   );
