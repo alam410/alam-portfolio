@@ -1407,9 +1407,6 @@ export default function AlamPortfolio({
               {visibleReferences.length ? <NavLink href="#references">References</NavLink> : null}
               <NavLink href="#profiles">Profiles</NavLink>
               <NavLink href="#contact">Contact</NavLink>
-            </nav>
-
-            <div className="order-2 hidden items-center gap-3 md:flex">
               {showAdminEntry ? (
                 <motion.a
                   href={adminHref}
@@ -1428,6 +1425,9 @@ export default function AlamPortfolio({
                   Owner Login
                 </motion.a>
               ) : null}
+            </nav>
+
+            <div className="order-2 hidden items-center gap-3 md:flex">
               <a
                 href={whatsappHref}
                 target="_blank"
