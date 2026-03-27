@@ -1374,18 +1374,18 @@ export default function AlamPortfolio({
       >
         <div className="pointer-events-none absolute inset-0 opacity-70" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(23,56,74,0.06) 1px, transparent 0)", backgroundSize: "18px 18px", maskImage: "linear-gradient(180deg, rgba(0,0,0,0.22), rgba(0,0,0,0))" }} />
         <header className="sticky top-0 z-40 border-b px-6 py-5 backdrop-blur md:px-10 lg:px-14" style={{ backgroundColor: "rgba(255,249,242,0.88)", borderColor: palette.line }}>
-          <div className="flex items-center justify-between gap-4">
-            <div className="min-w-0 max-w-[250px] sm:max-w-[340px]">
+          <div className="flex flex-wrap items-start justify-between gap-x-5 gap-y-4 xl:flex-nowrap xl:items-center">
+            <div className="min-w-[170px] flex-none sm:min-w-[210px] lg:min-w-[230px] xl:max-w-[320px]">
               <div className="text-[30px] italic leading-none" style={{ color: palette.ink, fontFamily: "cursive" }}>{profile.name}</div>
               <div
-                className="mt-1 text-xs leading-5 break-words"
+                className="mt-1 max-w-[260px] text-xs leading-5 whitespace-normal"
                 style={{ color: palette.text }}
               >
                 {headerRoleText || profile.role}
               </div>
             </div>
 
-            <nav className="hidden items-center gap-10 md:flex">
+            <nav className="order-3 hidden basis-full items-center justify-center gap-4 pt-1 md:flex md:flex-wrap lg:gap-6 xl:order-2 xl:basis-auto xl:flex-nowrap xl:justify-start xl:pt-0 2xl:gap-10">
               <motion.a
                 href="#services"
                 whileHover={{
@@ -1409,7 +1409,7 @@ export default function AlamPortfolio({
               <NavLink href="#contact">Contact</NavLink>
             </nav>
 
-            <div className="hidden items-center gap-4 md:flex">
+            <div className="order-2 hidden items-center gap-3 md:flex xl:order-3 xl:ml-4">
               {showAdminEntry ? (
                 <motion.a
                   href={adminHref}
