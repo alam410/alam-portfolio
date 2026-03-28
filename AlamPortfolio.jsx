@@ -875,6 +875,7 @@ function resolveProfileIcon(iconKey = "") {
 
 const fallbackFocusWords = ["Think", "Grow", "Collaborate"];
 const fallbackWelcomeWords = ["Hello", "Ciao", "Hola", "Salut", "你好", "Hallo", "Ola", "Selam", "Dia Dhuit"];
+const SPLASH_SESSION_KEY = "alam-portfolio-splash-seen-v1";
 
 function ServiceCard({ item }) {
   const Icon = serviceIcons[item.iconKey] || Code2;
@@ -1430,10 +1431,27 @@ export default function AlamPortfolio({
   const [menuOpen, setMenuOpen] = useState(false);
   const [focusWordIndex, setFocusWordIndex] = useState(0);
   const [splashWordIndex, setSplashWordIndex] = useState(0);
-  const [showWelcomeSplash, setShowWelcomeSplash] = useState(true);
+  const [showWelcomeSplash, setShowWelcomeSplash] = useState(() => {
+    if (typeof window === "undefined") {
+      return true;
+    }
+
+    try {
+      return !window.sessionStorage.getItem(SPLASH_SESSION_KEY);
+    } catch {
+      return true;
+    }
+  });
   const phoneDisplay = useMemo(() => formatPhoneDisplay(profile.phone), [profile.phone]);
   const whatsappHref = useMemo(() => getWhatsAppHref(profile.phone), [profile.phone]);
   const locationDisplay = useMemo(() => formatLocationDisplay(profile.location), [profile.location]);
+  const deferredSectionStyle = useMemo(
+    () => ({
+      contentVisibility: "auto",
+      containIntrinsicSize: "1px 960px",
+    }),
+    [],
+  );
   const headerRoleText = useMemo(
     () =>
       String(profile.role || "")
@@ -1637,6 +1655,18 @@ export default function AlamPortfolio({
       timeoutIds.forEach((timeoutId) => window.clearTimeout(timeoutId));
     };
   }, [showWelcomeSplash, splashWords]);
+
+  useEffect(() => {
+    if (showWelcomeSplash || typeof window === "undefined") {
+      return;
+    }
+
+    try {
+      window.sessionStorage.setItem(SPLASH_SESSION_KEY, "1");
+    } catch {
+      // Ignore sessionStorage failures so the portfolio can still render.
+    }
+  }, [showWelcomeSplash]);
 
   return (
     <div
@@ -1913,8 +1943,10 @@ export default function AlamPortfolio({
                         alt={profile.fullName}
                         width="819"
                         height="1024"
+                        loading="eager"
                         fetchPriority="high"
-                        decoding="async"
+                        decoding="auto"
+                        sizes="(min-width: 1024px) 350px, (min-width: 640px) 310px, 214px"
                         className="h-full w-full scale-[1.01] object-cover object-top"
                       />
                     </div>
@@ -1986,7 +2018,7 @@ export default function AlamPortfolio({
             </div>
           </motion.section>
 
-          <motion.section id="services" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-3 py-14 sm:px-6 sm:py-16 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fffdf9 0%, #fff2dd 100%)" }}>
+          <motion.section id="services" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-3 py-14 sm:px-6 sm:py-16 md:px-10 lg:px-14 lg:py-20" style={{ ...deferredSectionStyle, background: "linear-gradient(135deg, #fffdf9 0%, #fff2dd 100%)" }}>
             <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
               <div className="space-y-5">{services.map((item) => <ServiceCard key={item.id || item.title} item={item} />)}</div>
               <motion.div variants={fadeUp}>
@@ -2017,7 +2049,7 @@ export default function AlamPortfolio({
             </div>
           </motion.section>
 
-          <motion.section id="experience" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-3 py-14 sm:px-6 sm:py-16 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fff0ea 0%, #fffaf3 100%)" }}>
+          <motion.section id="experience" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-3 py-14 sm:px-6 sm:py-16 md:px-10 lg:px-14 lg:py-20" style={{ ...deferredSectionStyle, background: "linear-gradient(135deg, #fff0ea 0%, #fffaf3 100%)" }}>
             <SectionTitle title={sectionCopy.experienceTitle} sub={sectionCopy.experienceSub} center />
             <div className="mx-auto mt-14 max-w-[1120px] space-y-12">
               {sortedExperience.map((item, idx) => (
@@ -2040,7 +2072,7 @@ export default function AlamPortfolio({
             </div>
           </motion.section>
 
-          <motion.section id="works" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-3 py-14 sm:px-6 sm:py-16 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #ffffff 0%, #eef8ff 100%)" }}>
+          <motion.section id="works" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-3 py-14 sm:px-6 sm:py-16 md:px-10 lg:px-14 lg:py-20" style={{ ...deferredSectionStyle, background: "linear-gradient(135deg, #ffffff 0%, #eef8ff 100%)" }}>
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <SectionTitle title={sectionCopy.projectsTitle} sub={sectionCopy.projectsSub} />
               <a href="#profiles" className="inline-flex items-center gap-2 text-[14px] font-semibold" style={{ color: palette.coral }}>
@@ -2079,7 +2111,7 @@ export default function AlamPortfolio({
             )}
           </motion.section>
 
-          <motion.section initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-3 py-14 sm:px-6 sm:py-16 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fff7ef 0%, #fff1ff 100%)" }}>
+          <motion.section initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-3 py-14 sm:px-6 sm:py-16 md:px-10 lg:px-14 lg:py-20" style={{ ...deferredSectionStyle, background: "linear-gradient(135deg, #fff7ef 0%, #fff1ff 100%)" }}>
             <div className="grid gap-6 lg:grid-cols-2">
               <motion.div variants={fadeUp}>
                 <SectionTitle title={sectionCopy.achievementsTitle} sub={sectionCopy.achievementsSub} />
@@ -2154,7 +2186,7 @@ export default function AlamPortfolio({
               viewport={{ once: true, amount: 0.12 }}
               variants={{ show: { transition: { staggerChildren: 0.08 } } }}
               className="overflow-hidden px-3 py-14 sm:px-6 sm:py-16 md:px-10 lg:px-14 lg:py-20"
-              style={{ background: "linear-gradient(135deg, #fffdf8 0%, #eff7ff 100%)" }}
+              style={{ ...deferredSectionStyle, background: "linear-gradient(135deg, #fffdf8 0%, #eff7ff 100%)" }}
             >
               <motion.div variants={fadeUp} className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                 <SectionTitle title={sectionCopy.referencesTitle} sub={sectionCopy.referencesSub} />
@@ -2197,7 +2229,7 @@ export default function AlamPortfolio({
             </motion.section>
           ) : null}
 
-          <motion.section id="profiles" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.12 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-3 py-14 sm:px-6 sm:py-16 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fffdf8 0%, #f2ecff 100%)" }}>
+          <motion.section id="profiles" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.12 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-3 py-14 sm:px-6 sm:py-16 md:px-10 lg:px-14 lg:py-20" style={{ ...deferredSectionStyle, background: "linear-gradient(135deg, #fffdf8 0%, #f2ecff 100%)" }}>
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <SectionTitle title={sectionCopy.profilesTitle} sub={sectionCopy.profilesSub} />
               <a href={profile.linkedin} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-[14px] font-semibold" style={{ color: palette.coral }}>
@@ -2209,7 +2241,7 @@ export default function AlamPortfolio({
             </div>
           </motion.section>
 
-          <motion.section id="contact" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-3 py-14 sm:px-6 sm:py-16 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fff7f0 0%, #ffffff 100%)" }}>
+          <motion.section id="contact" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-3 py-14 sm:px-6 sm:py-16 md:px-10 lg:px-14 lg:py-20" style={{ ...deferredSectionStyle, background: "linear-gradient(135deg, #fff7f0 0%, #ffffff 100%)" }}>
             <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
               <motion.div variants={fadeUp}>
                 <h2 className="text-[50px] font-black leading-[1.06] tracking-[-0.04em] sm:text-[62px]" style={{ color: palette.ink }}>
