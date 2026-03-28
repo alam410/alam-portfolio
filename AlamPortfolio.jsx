@@ -1197,7 +1197,7 @@ function OnlineProfileCard({ item }) {
       transition={{ type: "spring", stiffness: 220, damping: 22, mass: 0.8 }}
     >
       <div
-        className="relative h-full overflow-hidden rounded-[24px] border p-5 shadow-[0_16px_34px_rgba(15,23,42,0.06)] transition-all duration-300 group-hover:shadow-[0_24px_48px_rgba(15,23,42,0.1)]"
+        className="relative h-full overflow-hidden rounded-[20px] border p-4 shadow-[0_16px_34px_rgba(15,23,42,0.06)] transition-all duration-300 group-hover:shadow-[0_24px_48px_rgba(15,23,42,0.1)] sm:rounded-[24px] sm:p-5"
         style={{
           borderColor: `${item.accent}22`,
           background: `linear-gradient(180deg, rgba(255,255,255,0.96) 0%, ${item.accent}10 100%)`,
@@ -1218,7 +1218,7 @@ function OnlineProfileCard({ item }) {
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-3">
               <div
-                className="relative flex h-[54px] w-[54px] items-center justify-center overflow-hidden rounded-[18px] border shadow-[0_12px_24px_rgba(15,23,42,0.08)] transition-all duration-300 group-hover:-translate-y-0.5"
+                className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-[16px] border shadow-[0_12px_24px_rgba(15,23,42,0.08)] transition-all duration-300 group-hover:-translate-y-0.5 sm:h-[54px] sm:w-[54px] sm:rounded-[18px]"
                 style={{
                   borderColor: hasCustomIcon ? "rgba(23,56,74,0.12)" : useBrandColors ? "rgba(15,23,42,0.16)" : `${item.accent}40`,
                   background: hasCustomIcon
@@ -1252,19 +1252,19 @@ function OnlineProfileCard({ item }) {
                   <img
                     src={item.iconImage}
                     alt={`${platformLabel} icon`}
-                    className="relative z-10 h-8 w-8 object-contain"
+                    className="relative z-10 h-7 w-7 object-contain sm:h-8 sm:w-8"
                     loading="lazy"
                     decoding="async"
                   />
                 ) : (
                   <Icon
-                    className={`relative z-10 ${useBrandColors ? "h-7 w-7" : "h-6 w-6"}`}
+                    className={`relative z-10 ${useBrandColors ? "h-6 w-6 sm:h-7 sm:w-7" : "h-5 w-5 sm:h-6 sm:w-6"}`}
                     style={useBrandColors ? undefined : { color: item.accent }}
                   />
                 )}
               </div>
               <div
-                className="rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em]"
+                className="rounded-full px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.15em] sm:px-3 sm:text-[10px] sm:tracking-[0.16em]"
                 style={{ backgroundColor: `${item.accent}14`, color: item.accent, border: `1px solid ${item.accent}24` }}
               >
                 {platformLabel}
@@ -1282,26 +1282,26 @@ function OnlineProfileCard({ item }) {
           </div>
 
           <div
-            className="relative mt-7 flex-1 rounded-[20px] border px-5 py-5 backdrop-blur-[1px]"
-            style={{
-              borderColor: `${item.accent}20`,
-              background: `linear-gradient(180deg, rgba(255,255,255,0.72) 0%, ${item.accent}12 100%)`,
-            }}
-          >
-            <div className="text-[22px] font-bold tracking-[-0.03em]" style={{ color: palette.ink }}>
+              className="relative mt-5 flex-1 rounded-[18px] border px-4 py-4 backdrop-blur-[1px] sm:mt-7 sm:rounded-[20px] sm:px-5 sm:py-5"
+              style={{
+                borderColor: `${item.accent}20`,
+                background: `linear-gradient(180deg, rgba(255,255,255,0.72) 0%, ${item.accent}12 100%)`,
+              }}
+            >
+            <div className="text-[19px] font-bold tracking-[-0.03em] sm:text-[22px]" style={{ color: palette.ink }}>
               {profileName}
             </div>
-            <div className="mt-3 text-[14px] leading-7" style={{ color: palette.text }}>
+            <div className="mt-2 text-[13px] leading-6 sm:mt-3 sm:text-[14px] sm:leading-7" style={{ color: palette.text }}>
               {item.handle}
             </div>
 
-            <div className="mt-6 flex items-center justify-between gap-3">
+            <div className="mt-5 flex items-center justify-between gap-3 sm:mt-6">
               <div
-                className="h-[3px] w-14 rounded-full transition-all duration-300 group-hover:w-24"
+                className="h-[3px] w-12 rounded-full transition-all duration-300 group-hover:w-20 sm:w-14 sm:group-hover:w-24"
                 style={{ backgroundColor: item.accent }}
               />
               <div
-                className="rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
+                className="rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] sm:px-3 sm:text-[11px] sm:tracking-[0.14em]"
                 style={{ color: palette.ink, backgroundColor: "rgba(255,255,255,0.68)" }}
               >
                 Active
@@ -1309,7 +1309,7 @@ function OnlineProfileCard({ item }) {
             </div>
           </div>
 
-          <div className="relative mt-5 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em]" style={{ color: palette.ink }}>
+          <div className="relative mt-4 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.12em] sm:mt-5 sm:text-[12px] sm:tracking-[0.14em]" style={{ color: palette.ink }}>
             Open profile
             <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </div>
@@ -1359,17 +1359,17 @@ function MediaCard({ item, eyebrow, fallbackLabel, metaLabel }) {
 
 function ReferenceCard({ item }) {
   return (
-    <div className="min-w-[320px] max-w-[320px] shrink-0">
+    <div className="min-w-[250px] max-w-[250px] shrink-0 snap-start sm:min-w-[290px] sm:max-w-[290px] md:min-w-[320px] md:max-w-[320px]">
       <DepthCard
-        className="h-full rounded-[28px]"
+        className="h-full rounded-[22px] sm:rounded-[28px]"
         glow="radial-gradient(circle at 18% 18%, rgba(47,126,117,0.22), rgba(255,255,255,0))"
         plate="rgba(255,255,255,0.34)"
         shadow="rgba(15,23,42,0.12)"
-        surfaceClassName="h-full bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,244,238,0.95)_100%)] p-5"
+        surfaceClassName="h-full bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,244,238,0.95)_100%)] p-4 sm:p-5"
       >
         <div className="flex h-full flex-col">
-          <div className="flex items-start gap-4">
-            <div className="h-16 w-16 shrink-0 overflow-hidden rounded-[18px] border bg-[#F8F4ED]" style={{ borderColor: palette.line }}>
+          <div className="flex items-start gap-3 sm:gap-4">
+            <div className="h-12 w-12 shrink-0 overflow-hidden rounded-[14px] border bg-[#F8F4ED] sm:h-16 sm:w-16 sm:rounded-[18px]" style={{ borderColor: palette.line }}>
               <ImageSlot
                 src={item.image}
                 alt={item.name || "Reference"}
@@ -1378,23 +1378,23 @@ function ReferenceCard({ item }) {
               />
             </div>
             <div className="min-w-0">
-              <div className="text-[18px] font-bold tracking-[-0.03em]" style={{ color: palette.ink }}>
+              <div className="text-[16px] font-bold tracking-[-0.03em] sm:text-[18px]" style={{ color: palette.ink }}>
                 {item.name}
               </div>
-              <div className="mt-1 text-[13px] leading-6" style={{ color: palette.text }}>
+              <div className="mt-1 text-[12px] leading-5 sm:text-[13px] sm:leading-6" style={{ color: palette.text }}>
                 {item.designation}
               </div>
             </div>
           </div>
 
           <div
-            className="mt-5 flex h-10 w-10 items-center justify-center rounded-full"
+            className="mt-4 flex h-9 w-9 items-center justify-center rounded-full sm:mt-5 sm:h-10 sm:w-10"
             style={{ backgroundColor: "rgba(47,126,117,0.12)" }}
           >
             <MessageCircle className="h-4 w-4" style={{ color: palette.teal }} />
           </div>
 
-          <p className="mt-4 text-[15px] leading-8" style={{ color: palette.ink }}>
+          <p className="mt-3 text-[14px] leading-7 sm:mt-4 sm:text-[15px] sm:leading-8" style={{ color: palette.ink }}>
             "{item.quote}"
           </p>
         </div>
@@ -1411,6 +1411,7 @@ export default function AlamPortfolio({
   showAdminEntry = false,
 }) {
   const mergedContent = useMemo(() => mergePortfolioContent(content), [content]);
+  const isTouchMotion = useTouchMotion();
   const {
     profile,
     sectionCopy,
@@ -1807,19 +1808,19 @@ export default function AlamPortfolio({
             initial="hidden"
             animate="show"
             variants={{ show: { transition: { staggerChildren: 0.08 } } }}
-            className="px-6 pb-4 pt-8 md:px-10 lg:px-14 lg:pt-10"
+            className="px-4 pb-4 pt-8 sm:px-6 md:px-10 lg:px-14 lg:pt-10"
           >
-            <div className="grid items-start gap-8 lg:grid-cols-[1fr_1.05fr_0.78fr]">
-              <motion.div variants={fadeUp} className="order-1 pt-6 lg:pt-12">
+            <div className="grid items-start gap-6 sm:gap-8 lg:grid-cols-[1fr_1.05fr_0.78fr]">
+              <motion.div variants={fadeUp} className="order-1 min-w-0 pt-2 sm:pt-6 lg:pt-12">
                 <div className="inline-flex rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em]" style={{ backgroundColor: palette.warm, color: palette.teal }}>
                   {sectionCopy.heroBadge}
                 </div>
-                <h1 className="mt-6 text-[56px] font-black leading-[0.94] tracking-[-0.05em] sm:text-[72px] lg:text-[82px]" style={{ color: palette.ink, fontFamily: '"Space Grotesk", "Manrope", sans-serif' }}>
+                <h1 className="mt-6 text-[46px] font-black leading-[0.94] tracking-[-0.05em] sm:text-[64px] lg:text-[82px]" style={{ color: palette.ink, fontFamily: '"Space Grotesk", "Manrope", sans-serif' }}>
                   {profile.heroFirst}
                   <br />
                   {profile.heroLast}
                 </h1>
-                <p className="mt-8 max-w-[440px] text-[18px] leading-[1.9]" style={{ color: "#3E4A53" }}>{profile.subtitle}</p>
+                <p className="mt-6 max-w-[440px] text-[16px] leading-[1.8] sm:mt-8 sm:text-[18px] sm:leading-[1.9]" style={{ color: "#3E4A53" }}>{profile.subtitle}</p>
                 <a
                   href={`mailto:${profile.email}`}
                   className="mt-6 inline-flex items-center gap-2 text-[15px] font-semibold underline underline-offset-4 break-all"
@@ -1828,51 +1829,51 @@ export default function AlamPortfolio({
                   <Mail className="h-4 w-4 shrink-0" />
                   <span>{profile.email}</span>
                 </a>
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <a href="#works" className="rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5" style={{ backgroundColor: palette.teal }}>
+                <div className="mt-5 flex flex-wrap gap-2.5 sm:gap-3">
+                  <a href="#works" className="rounded-full px-4 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 sm:px-5" style={{ backgroundColor: palette.teal }}>
                     {sectionCopy.heroPrimaryButton}
                   </a>
-                  <a href="#contact" className="rounded-full border px-5 py-3 text-sm font-semibold transition-transform hover:-translate-y-0.5" style={{ borderColor: palette.line, color: palette.ink }}>
+                  <a href="#contact" className="rounded-full border px-4 py-3 text-sm font-semibold transition-transform hover:-translate-y-0.5 sm:px-5" style={{ borderColor: palette.line, color: palette.ink }}>
                     {sectionCopy.heroSecondaryButton}
                   </a>
                   <button
                     type="button"
                     onClick={onDownloadCv}
                     disabled={!profile.cvUrl || isDownloadingCv}
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform enabled:hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold text-white transition-transform enabled:hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:px-5"
                     style={{ backgroundColor: palette.coral }}
                   >
                     {isDownloadingCv ? "Downloading..." : profile.cvUrl ? sectionCopy.contactDownloadLabel : "Upload CV in Admin"}
                   </button>
-                  <a href={profile.github} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border px-5 py-3 text-sm font-semibold transition-transform hover:-translate-y-0.5" style={{ borderColor: palette.line, color: palette.ink }}>
+                  <a href={profile.github} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border px-4 py-3 text-sm font-semibold transition-transform hover:-translate-y-0.5 sm:px-5" style={{ borderColor: palette.line, color: palette.ink }}>
                     {sectionCopy.heroGithubButton} <ArrowUpRight className="h-4 w-4" />
                   </a>
                 </div>
-                <div className="mt-12 grid max-w-[360px] grid-cols-3 gap-3">
-                  <div className="relative overflow-hidden rounded-[18px] border p-4 shadow-[0_18px_34px_rgba(15,23,42,0.08)]" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(239,234,224,0.95) 100%)", borderColor: "rgba(255,255,255,0.55)" }}>
+                <div className="mt-10 grid w-full max-w-[340px] grid-cols-3 gap-2 sm:mt-12 sm:max-w-[360px] sm:gap-3">
+                  <div className="relative overflow-hidden rounded-[16px] border p-3 shadow-[0_18px_34px_rgba(15,23,42,0.08)] sm:rounded-[18px] sm:p-4" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(239,234,224,0.95) 100%)", borderColor: "rgba(255,255,255,0.55)" }}>
                     <div className="pointer-events-none absolute right-[-14px] top-[-14px] h-12 w-12 rounded-full blur-2xl" style={{ backgroundColor: "rgba(241,200,76,0.4)" }} />
-                    <div className="text-2xl font-black" style={{ color: palette.ink }}>{String(projects.length).padStart(2, "0")}</div>
-                    <div className="mt-1 text-xs uppercase tracking-[0.14em]" style={{ color: palette.text }}>{sectionCopy.heroProjectsLabel}</div>
+                    <div className="text-[32px] font-black leading-none sm:text-2xl" style={{ color: palette.ink }}>{String(projects.length).padStart(2, "0")}</div>
+                    <div className="mt-1 text-[11px] uppercase tracking-[0.12em] sm:text-xs sm:tracking-[0.14em]" style={{ color: palette.text }}>{sectionCopy.heroProjectsLabel}</div>
                   </div>
-                  <div className="relative overflow-hidden rounded-[18px] border p-4 shadow-[0_18px_34px_rgba(15,23,42,0.08)]" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(239,234,224,0.95) 100%)", borderColor: "rgba(255,255,255,0.55)" }}>
+                  <div className="relative overflow-hidden rounded-[16px] border p-3 shadow-[0_18px_34px_rgba(15,23,42,0.08)] sm:rounded-[18px] sm:p-4" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(239,234,224,0.95) 100%)", borderColor: "rgba(255,255,255,0.55)" }}>
                     <div className="pointer-events-none absolute right-[-14px] top-[-14px] h-12 w-12 rounded-full blur-2xl" style={{ backgroundColor: "rgba(47,126,117,0.28)" }} />
-                    <div className="text-2xl font-black" style={{ color: palette.ink }}>{String(visibleOnlineProfiles.length).padStart(2, "0")}</div>
-                    <div className="mt-1 text-xs uppercase tracking-[0.14em]" style={{ color: palette.text }}>{sectionCopy.heroProfilesLabel}</div>
+                    <div className="text-[32px] font-black leading-none sm:text-2xl" style={{ color: palette.ink }}>{String(visibleOnlineProfiles.length).padStart(2, "0")}</div>
+                    <div className="mt-1 text-[11px] uppercase tracking-[0.12em] sm:text-xs sm:tracking-[0.14em]" style={{ color: palette.text }}>{sectionCopy.heroProfilesLabel}</div>
                   </div>
-                  <div className="relative overflow-hidden rounded-[18px] border p-4 shadow-[0_18px_34px_rgba(15,23,42,0.08)]" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(239,234,224,0.95) 100%)", borderColor: "rgba(255,255,255,0.55)" }}>
+                  <div className="relative overflow-hidden rounded-[16px] border p-3 shadow-[0_18px_34px_rgba(15,23,42,0.08)] sm:rounded-[18px] sm:p-4" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(239,234,224,0.95) 100%)", borderColor: "rgba(255,255,255,0.55)" }}>
                     <div className="pointer-events-none absolute right-[-14px] top-[-14px] h-12 w-12 rounded-full blur-2xl" style={{ backgroundColor: "rgba(179,136,235,0.32)" }} />
-                    <div className="text-2xl font-black" style={{ color: palette.ink }}>AI</div>
-                    <div className="mt-1 text-xs uppercase tracking-[0.14em]" style={{ color: palette.text }}>{sectionCopy.heroMajorLabel}</div>
+                    <div className="text-[32px] font-black leading-none sm:text-2xl" style={{ color: palette.ink }}>AI</div>
+                    <div className="mt-1 text-[11px] uppercase tracking-[0.12em] sm:text-xs sm:tracking-[0.14em]" style={{ color: palette.text }}>{sectionCopy.heroMajorLabel}</div>
                   </div>
                 </div>
               </motion.div>
 
-              <motion.div variants={fadeUp} className="order-2 relative mx-auto flex h-[600px] w-full max-w-[560px] items-center justify-center overflow-visible">
-                <div className="pointer-events-none absolute inset-x-10 bottom-12 h-24 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(15,23,42,0.16) 0%, rgba(15,23,42,0) 72%)" }} />
+              <motion.div variants={fadeUp} className="order-2 relative mx-auto flex h-[390px] w-full max-w-[310px] items-center justify-center overflow-visible sm:h-[520px] sm:max-w-[440px] lg:h-[600px] lg:max-w-[560px]">
+                <div className="pointer-events-none absolute inset-x-6 bottom-8 h-20 rounded-full blur-3xl sm:inset-x-10 sm:bottom-12 sm:h-24" style={{ background: "radial-gradient(circle, rgba(15,23,42,0.16) 0%, rgba(15,23,42,0) 72%)" }} />
                 <motion.div
                   animate={{ y: [0, -8, 0], rotate: [-8, -6, -8] }}
                   transition={{ duration: 7.4, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute left-[10%] top-[10%] h-[470px] w-[360px] rounded-[50px] border backdrop-blur-md"
+                  className="absolute left-[6%] top-[8%] h-[300px] w-[230px] rounded-[34px] border backdrop-blur-md sm:left-[10%] sm:top-[10%] sm:h-[400px] sm:w-[300px] sm:rounded-[42px] lg:h-[470px] lg:w-[360px] lg:rounded-[50px]"
                   style={{
                     background: "linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 100%)",
                     borderColor: "rgba(255,255,255,0.28)",
@@ -1882,15 +1883,15 @@ export default function AlamPortfolio({
                 <motion.div
                   animate={{ y: [0, 10, 0], rotate: [7, 5, 7] }}
                   transition={{ duration: 8.2, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute right-[11%] top-[18%] h-[440px] w-[340px] rounded-[48px] border backdrop-blur-sm"
+                  className="absolute right-[7%] top-[15%] h-[280px] w-[215px] rounded-[32px] border backdrop-blur-sm sm:right-[11%] sm:top-[18%] sm:h-[370px] sm:w-[280px] sm:rounded-[40px] lg:h-[440px] lg:w-[340px] lg:rounded-[48px]"
                   style={{
                     background: "linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 100%)",
                     borderColor: "rgba(255,255,255,0.24)",
                     boxShadow: "0 22px 44px rgba(15,23,42,0.06)",
                   }}
                 />
-                <div className="pointer-events-none absolute left-[18%] top-[7%] h-[190px] w-[190px] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(241,200,76,0.30) 0%, rgba(255,255,255,0) 72%)" }} />
-                <div className="pointer-events-none absolute right-[14%] top-[20%] h-[220px] w-[220px] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(47,126,117,0.24) 0%, rgba(255,255,255,0) 72%)" }} />
+                <div className="pointer-events-none absolute left-[14%] top-[5%] h-[120px] w-[120px] rounded-full blur-3xl sm:left-[18%] sm:top-[7%] sm:h-[170px] sm:w-[170px] lg:h-[190px] lg:w-[190px]" style={{ background: "radial-gradient(circle, rgba(241,200,76,0.30) 0%, rgba(255,255,255,0) 72%)" }} />
+                <div className="pointer-events-none absolute right-[10%] top-[18%] h-[140px] w-[140px] rounded-full blur-3xl sm:right-[14%] sm:top-[20%] sm:h-[180px] sm:w-[180px] lg:h-[220px] lg:w-[220px]" style={{ background: "radial-gradient(circle, rgba(47,126,117,0.24) 0%, rgba(255,255,255,0) 72%)" }} />
 
                 <motion.div
                   animate={{ y: [0, -10, 0] }}
@@ -1898,14 +1899,14 @@ export default function AlamPortfolio({
                   className="relative z-10"
                 >
                   <div
-                    className="relative h-[500px] w-[350px] rounded-[44px] border p-3 shadow-[0_34px_58px_rgba(15,23,42,0.18)]"
+                    className="relative h-[340px] w-[255px] rounded-[30px] border p-2.5 shadow-[0_28px_46px_rgba(15,23,42,0.18)] sm:h-[440px] sm:w-[310px] sm:rounded-[38px] sm:p-3 lg:h-[500px] lg:w-[350px] lg:rounded-[44px]"
                     style={{
                       background: "linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(244,238,230,0.94) 100%)",
                       borderColor: "rgba(255,255,255,0.65)",
                     }}
                   >
-                    <div className="pointer-events-none absolute inset-[10px] rounded-[36px] border" style={{ borderColor: "rgba(23,56,74,0.08)" }} />
-                    <div className="relative h-full overflow-hidden rounded-[34px] border-[6px] border-white/90 bg-[#f4ede3] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                    <div className="pointer-events-none absolute inset-[8px] rounded-[24px] border sm:inset-[10px] sm:rounded-[32px] lg:rounded-[36px]" style={{ borderColor: "rgba(23,56,74,0.08)" }} />
+                    <div className="relative h-full overflow-hidden rounded-[24px] border-[5px] border-white/90 bg-[#f4ede3] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] sm:rounded-[30px] sm:border-[6px] lg:rounded-[34px]">
                       <div className="absolute inset-x-0 top-0 z-10 h-24 bg-gradient-to-b from-white/30 to-transparent" />
                       <img
                         src={profile.profileImage}
@@ -1921,10 +1922,10 @@ export default function AlamPortfolio({
                 </motion.div>
               </motion.div>
 
-              <motion.div variants={fadeUp} className="order-3 pt-4 lg:pt-16">
-                <p className="max-w-[280px] text-[18px] leading-[1.95]" style={{ color: "#2D3942" }}>{profile.intro}</p>
+              <motion.div variants={fadeUp} className="order-3 min-w-0 pt-2 sm:pt-4 lg:pt-16">
+                <p className="max-w-[320px] text-[16px] leading-[1.85] sm:max-w-[280px] sm:text-[18px] sm:leading-[1.95]" style={{ color: "#2D3942" }}>{profile.intro}</p>
                 <DepthCard
-                  className="mt-12 rounded-[28px]"
+                  className="mt-8 rounded-[24px] sm:mt-12 sm:rounded-[28px]"
                   glow="radial-gradient(circle at 80% 10%, rgba(241,200,76,0.28), rgba(255,255,255,0))"
                   plate="rgba(255,255,255,0.34)"
                   shadow="rgba(15,23,42,0.14)"
@@ -1935,13 +1936,13 @@ export default function AlamPortfolio({
                   </div>
 
                   <div
-                    className="mt-2 rounded-[20px] px-5 py-4"
+                    className="mt-2 rounded-[18px] px-4 py-4 sm:rounded-[20px] sm:px-5"
                     style={{ background: "linear-gradient(180deg, rgba(255,250,244,0.98) 0%, rgba(240,228,210,0.96) 100%)" }}
                   >
                     <div className="text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: palette.text }}>
                       {sectionCopy.heroLoopLabel}
                     </div>
-                    <div className="relative mt-2 h-[38px] overflow-hidden">
+                    <div className="relative mt-2 h-[32px] overflow-hidden sm:h-[38px]">
                       <AnimatePresence mode="wait">
                         <motion.div
                           key={currentFocusWord}
@@ -1952,7 +1953,7 @@ export default function AlamPortfolio({
                           className="absolute inset-x-0 top-0 flex items-start"
                         >
                           <div
-                            className="max-w-full text-[26px] font-black leading-none tracking-[-0.05em] sm:text-[30px]"
+                            className="max-w-full text-[24px] font-black leading-none tracking-[-0.05em] sm:text-[30px]"
                             style={{ color: palette.ink, fontFamily: '"Space Grotesk", "Manrope", sans-serif' }}
                           >
                             {currentFocusWord}
@@ -1962,17 +1963,17 @@ export default function AlamPortfolio({
                     </div>
                     <div className="mt-2 border-t pt-3" style={{ borderColor: "rgba(23,56,74,0.08)" }}>
                     <div
-                      className="text-[26px] font-black leading-[1.02] tracking-[-0.05em] sm:text-[30px]"
+                      className="text-[22px] font-black leading-[1.05] tracking-[-0.05em] sm:text-[30px]"
                       style={{ color: palette.ink, fontFamily: '"Space Grotesk", "Manrope", sans-serif' }}
                     >
                       {sectionCopy.heroCtaTitle}
                     </div>
-                    <p className="mt-3 max-w-[240px] text-[14px] leading-7" style={{ color: "#4C5760" }}>
+                    <p className="mt-3 max-w-[260px] text-[13px] leading-6 sm:max-w-[240px] sm:text-[14px] sm:leading-7" style={{ color: "#4C5760" }}>
                       {sectionCopy.heroCtaBody}
                     </p>
                     <a
                       href="#contact"
-                      className="mt-4 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_30px_rgba(47,126,117,0.22)] transition-transform hover:-translate-y-1"
+                      className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold text-white shadow-[0_18px_30px_rgba(47,126,117,0.22)] transition-transform hover:-translate-y-1 sm:px-5"
                       style={{ backgroundColor: palette.teal }}
                     >
                       <Handshake className="h-4 w-4" />
@@ -1985,7 +1986,7 @@ export default function AlamPortfolio({
             </div>
           </motion.section>
 
-          <motion.section id="services" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-6 py-16 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fffdf9 0%, #fff2dd 100%)" }}>
+          <motion.section id="services" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-4 py-16 sm:px-6 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fffdf9 0%, #fff2dd 100%)" }}>
             <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
               <div className="space-y-5">{services.map((item) => <ServiceCard key={item.id || item.title} item={item} />)}</div>
               <motion.div variants={fadeUp}>
@@ -2016,7 +2017,7 @@ export default function AlamPortfolio({
             </div>
           </motion.section>
 
-          <motion.section id="experience" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-6 py-16 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fff0ea 0%, #fffaf3 100%)" }}>
+          <motion.section id="experience" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-4 py-16 sm:px-6 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fff0ea 0%, #fffaf3 100%)" }}>
             <SectionTitle title={sectionCopy.experienceTitle} sub={sectionCopy.experienceSub} center />
             <div className="mx-auto mt-14 max-w-[1120px] space-y-12">
               {sortedExperience.map((item, idx) => (
@@ -2039,7 +2040,7 @@ export default function AlamPortfolio({
             </div>
           </motion.section>
 
-          <motion.section id="works" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-6 py-16 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #ffffff 0%, #eef8ff 100%)" }}>
+          <motion.section id="works" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-4 py-16 sm:px-6 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #ffffff 0%, #eef8ff 100%)" }}>
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <SectionTitle title={sectionCopy.projectsTitle} sub={sectionCopy.projectsSub} />
               <a href="#profiles" className="inline-flex items-center gap-2 text-[14px] font-semibold" style={{ color: palette.coral }}>
@@ -2078,7 +2079,7 @@ export default function AlamPortfolio({
             )}
           </motion.section>
 
-          <motion.section initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-6 py-16 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fff7ef 0%, #fff1ff 100%)" }}>
+          <motion.section initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-4 py-16 sm:px-6 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fff7ef 0%, #fff1ff 100%)" }}>
             <div className="grid gap-6 lg:grid-cols-2">
               <motion.div variants={fadeUp}>
                 <SectionTitle title={sectionCopy.achievementsTitle} sub={sectionCopy.achievementsSub} />
@@ -2152,7 +2153,7 @@ export default function AlamPortfolio({
               whileInView="show"
               viewport={{ once: true, amount: 0.12 }}
               variants={{ show: { transition: { staggerChildren: 0.08 } } }}
-              className="overflow-hidden px-6 py-16 md:px-10 lg:px-14 lg:py-20"
+              className="overflow-hidden px-4 py-16 sm:px-6 md:px-10 lg:px-14 lg:py-20"
               style={{ background: "linear-gradient(135deg, #fffdf8 0%, #eff7ff 100%)" }}
             >
               <motion.div variants={fadeUp} className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -2166,18 +2167,18 @@ export default function AlamPortfolio({
               </motion.div>
 
               <motion.div variants={fadeUp} className="relative mt-10">
-                <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#fffdf8] to-transparent md:w-24" />
-                <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#eff7ff] to-transparent md:w-24" />
+                {!isTouchMotion ? <div className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-16 bg-gradient-to-r from-[#fffdf8] to-transparent md:block md:w-24" /> : null}
+                {!isTouchMotion ? <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-16 bg-gradient-to-l from-[#eff7ff] to-transparent md:block md:w-24" /> : null}
 
-                <div className="overflow-hidden">
+                <div className={isTouchMotion ? "overflow-x-auto pb-2 [scrollbar-width:none]" : "overflow-hidden"}>
                   <motion.div
                     animate={
-                      visibleReferences.length > 1
+                      visibleReferences.length > 1 && !isTouchMotion
                         ? { x: ["0%", "-50%"] }
                         : undefined
                     }
                     transition={
-                      visibleReferences.length > 1
+                      visibleReferences.length > 1 && !isTouchMotion
                         ? {
                             duration: Math.max(28, visibleReferences.length * 8),
                             repeat: Infinity,
@@ -2185,9 +2186,9 @@ export default function AlamPortfolio({
                           }
                         : undefined
                     }
-                    className="flex w-max gap-6 pr-6"
+                    className={`flex ${isTouchMotion ? "snap-x snap-mandatory gap-4 pr-4" : "w-max gap-6 pr-6"}`}
                   >
-                    {scrollingReferences.map((item, index) => (
+                    {(isTouchMotion ? visibleReferences : scrollingReferences).map((item, index) => (
                       <ReferenceCard key={`${item.id || item.name}-${index}`} item={item} />
                     ))}
                   </motion.div>
@@ -2196,19 +2197,19 @@ export default function AlamPortfolio({
             </motion.section>
           ) : null}
 
-          <motion.section id="profiles" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.12 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-6 py-16 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fffdf8 0%, #f2ecff 100%)" }}>
+          <motion.section id="profiles" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.12 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-4 py-16 sm:px-6 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fffdf8 0%, #f2ecff 100%)" }}>
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <SectionTitle title={sectionCopy.profilesTitle} sub={sectionCopy.profilesSub} />
               <a href={profile.linkedin} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-[14px] font-semibold" style={{ color: palette.coral }}>
                 {sectionCopy.profilesCtaText} <ArrowUpRight className="h-4 w-4" />
               </a>
             </div>
-            <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-10 grid gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-4">
               {visibleOnlineProfiles.map((item) => <OnlineProfileCard key={item.id || item.title} item={item} />)}
             </div>
           </motion.section>
 
-          <motion.section id="contact" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-6 py-16 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fff7f0 0%, #ffffff 100%)" }}>
+          <motion.section id="contact" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="px-4 py-16 sm:px-6 md:px-10 lg:px-14 lg:py-20" style={{ background: "linear-gradient(135deg, #fff7f0 0%, #ffffff 100%)" }}>
             <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
               <motion.div variants={fadeUp}>
                 <h2 className="text-[50px] font-black leading-[1.06] tracking-[-0.04em] sm:text-[62px]" style={{ color: palette.ink }}>
@@ -2219,8 +2220,8 @@ export default function AlamPortfolio({
                 <p className="mt-6 max-w-[520px] text-[16px] leading-8" style={{ color: palette.text }}>
                   {sectionCopy.contactBody}
                 </p>
-                <div className="mt-10 inline-flex items-center gap-4 rounded-[18px] border bg-white px-4 py-4 shadow-[0_8px_20px_rgba(0,0,0,0.03)]" style={{ borderColor: palette.line }}>
-                  <div className="h-16 w-16 overflow-hidden rounded-[16px]" style={{ backgroundColor: palette.warm }}>
+                <div className="mt-8 flex w-full max-w-[520px] items-center gap-3 rounded-[16px] border bg-white px-4 py-3 shadow-[0_8px_20px_rgba(0,0,0,0.03)] sm:mt-10 sm:gap-4 sm:rounded-[18px] sm:py-4" style={{ borderColor: palette.line }}>
+                  <div className="h-12 w-12 overflow-hidden rounded-[14px] sm:h-16 sm:w-16 sm:rounded-[16px]" style={{ backgroundColor: palette.warm }}>
                     <img
                       src={profile.profileImage}
                       alt={profile.fullName}
@@ -2231,20 +2232,20 @@ export default function AlamPortfolio({
                       className="h-full w-full object-cover object-top"
                     />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <div className="text-xs font-semibold uppercase tracking-[0.16em]" style={{ color: palette.text }}>{sectionCopy.basedInLabel}</div>
-                    <div className="mt-1 text-[20px] font-bold tracking-[-0.03em]" style={{ color: palette.ink }}>{locationDisplay}</div>
+                    <div className="mt-1 break-words text-[18px] font-bold tracking-[-0.03em] sm:text-[20px]" style={{ color: palette.ink }}>{locationDisplay}</div>
                   </div>
                 </div>
               </motion.div>
 
-              <motion.div variants={fadeUp} className="grid gap-4">
+              <motion.div variants={fadeUp} className="grid gap-3 sm:gap-4">
                 {profile.cvUrl ? (
                   <button
                     type="button"
                     onClick={onDownloadCv}
                     disabled={isDownloadingCv}
-                  className="flex items-center justify-center gap-3 rounded-[14px] px-5 py-4 text-left text-white shadow-[0_10px_24px_rgba(0,0,0,0.08)] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="flex items-center justify-center gap-3 rounded-[14px] px-4 py-3.5 text-left text-white shadow-[0_10px_24px_rgba(0,0,0,0.08)] disabled:cursor-not-allowed disabled:opacity-60 sm:px-5 sm:py-4"
                   style={{ backgroundColor: palette.coral }}
                 >
                   <ArrowUpRight className="h-4 w-4" />
@@ -2261,26 +2262,26 @@ export default function AlamPortfolio({
                         href={item.href}
                         target={item.href.startsWith("http") ? "_blank" : undefined}
                         rel={item.href.startsWith("http") ? "noreferrer" : undefined}
-                        className="group flex items-center justify-between gap-4 rounded-[18px] border bg-white/90 px-5 py-4 shadow-[0_10px_24px_rgba(0,0,0,0.035)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(23,56,74,0.08)]"
+                        className="group flex items-center justify-between gap-3 rounded-[16px] border bg-white/90 px-4 py-3 shadow-[0_10px_24px_rgba(0,0,0,0.035)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(23,56,74,0.08)] sm:gap-4 sm:rounded-[18px] sm:px-5 sm:py-4"
                         style={{ borderColor: palette.line }}
                       >
-                        <div className="flex items-center gap-4">
+                        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
                           <div
-                            className="flex h-11 w-11 items-center justify-center rounded-full"
+                            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full sm:h-11 sm:w-11"
                             style={{ backgroundColor: `${item.accent}18` }}
                           >
                             <Icon className="h-4 w-4" style={{ color: item.accent }} />
                           </div>
-                          <div>
+                          <div className="min-w-0">
                             <div className="text-[11px] font-semibold uppercase tracking-[0.18em]" style={{ color: palette.text }}>
                               {item.label}
                             </div>
-                            <div className="mt-1 text-[18px] font-semibold tracking-[-0.02em]" style={{ color: palette.ink }}>
+                            <div className="mt-1 break-words text-[15px] font-semibold leading-7 tracking-[-0.02em] sm:text-[18px]" style={{ color: palette.ink }}>
                               {item.value}
                             </div>
                           </div>
                         </div>
-                        <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style={{ color: palette.text }} />
+                        <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style={{ color: palette.text }} />
                       </a>
                     );
                   }
@@ -2288,20 +2289,20 @@ export default function AlamPortfolio({
                   return (
                     <div
                       key={item.id}
-                      className="flex items-center gap-4 rounded-[18px] border bg-white/90 px-5 py-4 shadow-[0_10px_24px_rgba(0,0,0,0.035)]"
+                      className="flex items-center gap-3 rounded-[16px] border bg-white/90 px-4 py-3 shadow-[0_10px_24px_rgba(0,0,0,0.035)] sm:gap-4 sm:rounded-[18px] sm:px-5 sm:py-4"
                       style={{ borderColor: palette.line }}
                     >
                       <div
-                        className="flex h-11 w-11 items-center justify-center rounded-full"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full sm:h-11 sm:w-11"
                         style={{ backgroundColor: `${item.accent}18` }}
                       >
                         <Icon className="h-4 w-4" style={{ color: item.accent }} />
                       </div>
-                      <div>
+                      <div className="min-w-0">
                         <div className="text-[11px] font-semibold uppercase tracking-[0.18em]" style={{ color: palette.text }}>
                           {item.label}
                         </div>
-                        <div className="mt-1 text-[18px] font-semibold tracking-[-0.02em]" style={{ color: palette.ink }}>
+                        <div className="mt-1 break-words text-[15px] font-semibold leading-7 tracking-[-0.02em] sm:text-[18px]" style={{ color: palette.ink }}>
                           {item.value}
                         </div>
                       </div>
